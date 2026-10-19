@@ -1,4 +1,4 @@
-<table class="table">
+<!-- <table class="table">
   <thead class="table-dark">
     <tr>
       <th></th>
@@ -19,4 +19,22 @@
     </tr>
   }
   </tbody>
-</table>
+</table> -->
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="row">
+      @for (product of products(); track product.sku) {
+        <div class="col-md-3">
+          <div class="product-box">
+            <img [src]="product.imageUrl" class="img-responsive" />
+            <h1>{{ product.name }}</h1>
+            <div class="price">{{ product.unitPrice | currency: 'USD' }}</div>
+            <a href="#" class="primary-btn">Add to cart</a>
+          </div>
+        </div>
+      }
+      </div>
+    </div>
+  </div>
+</div>
