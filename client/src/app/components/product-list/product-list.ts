@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductList {
   products = signal<Product[]>([]);
   currentCategoryId = signal<number>(1);
+  searchMode = signal<boolean>(false);
   
   constructor(
     private productService: ProductService,
@@ -26,6 +27,11 @@ export class ProductList {
   };
 
   listProducts() {
+    this.searchMode.set(this.route.snapshot.paramMap.has('keyword'));
+    this.searchMode() ? this.handleSearchProduct() : this.handleListProducts();
+  };
+
+  handleListProducts() {
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
     hasCategoryId ? 
       this.currentCategoryId.set(+this.route.snapshot.paramMap.get('id')!) : 
@@ -33,6 +39,13 @@ export class ProductList {
 
     this.productService
       .getProductList(this.currentCategoryId())
+      .subscribe(data => this.products.set(data));
+  };
+
+  handleSearchProduct() {
+    const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
+    this.productService
+      .searchProducts(theKeyword)
       .subscribe(data => this.products.set(data));
   };
 }
