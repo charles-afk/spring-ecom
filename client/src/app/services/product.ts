@@ -26,6 +26,11 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { };
 
+  getProduct(currentCategoryId: number): Observable<Product> {
+    const productUrl = `${this.baseUrl}/${currentCategoryId}`;
+    return this.httpClient.get<Product>(productUrl);
+  };
+
   getProductList(currentCategoryId: number): Observable<Product[]> {
     const searchUrl = `${this.baseUrl}/search/findByCategory_Id?id=${currentCategoryId}`
     return this.getProducts(searchUrl);
