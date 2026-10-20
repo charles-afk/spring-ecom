@@ -3,6 +3,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { ProductService } from '../../services/product';
 import { Product } from '../../common/product';
+import { CartService } from '../../services/cart';
+import { CartItem } from '../../common/cart-item';
 
 @Component({
   selector: 'app-product-details',
@@ -11,11 +13,12 @@ import { Product } from '../../common/product';
   styleUrl: './product-details.css',
 })
 export class ProductDetails implements OnInit {
-  product = signal<Product|null>(null);
+  product = signal<Product>(new Product(0, '', '', '', 0, '', false, 0, new Date(), new Date()));
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    public cartService: CartService,
   ) { }
 
   ngOnInit(): void {
@@ -29,5 +32,10 @@ export class ProductDetails implements OnInit {
     this.productService
       .getProduct(theProductId)
       .subscribe(data => this.product.set(data));
+  };
+
+  addToCart(product: Product) {
+    const cartItem = new CartItem(product);
+    this.cartService.updateCart(cartItem);
   };
 }

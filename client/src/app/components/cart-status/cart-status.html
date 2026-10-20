@@ -1,0 +1,9 @@
+<div class="cart-area d-n">
+  <a href="shopping-detail.html">
+    <div class="total">
+      {{ cartService.total() | currency: 'USD' }}
+      <span>{{ cartService.cartItems().length }}</span> 
+    </div> 
+    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+  </a>
+</div>
