@@ -5,9 +5,15 @@ import { map } from 'rxjs/operators'
 import { Product } from '../common/product';
 import { ProductCategory } from '../common/product-category';
 
-interface GetResponseProducts {
+export interface GetResponseProducts {
   _embedded: {
     products: Product[];
+  },
+  page: {
+    number: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
   }
 };
 
@@ -51,5 +57,15 @@ export class ProductService {
     return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
       map(response => response._embedded.productCategory)
     );
+  };
+
+  getProductListPaginate(page: number, pageSize: number, categoryId: number): Observable<GetResponseProducts> {
+    const url = `${this.baseUrl}/search/findByCategory_Id?id=${categoryId}&page=${page}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseProducts>(url);
+  };
+
+  searchProductsPaginate(page: number, pageSize: number, keyword: string): Observable<GetResponseProducts> {
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${keyword}&page=${page}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
   };
 };

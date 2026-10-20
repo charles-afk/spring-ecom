@@ -10,7 +10,7 @@ import { Product } from '../../common/product';
   templateUrl: './product-details.html',
   styleUrl: './product-details.css',
 })
-export class ProductDetails {
+export class ProductDetails implements OnInit {
   product = signal<Product|null>(null);
 
   constructor(

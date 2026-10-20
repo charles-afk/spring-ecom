@@ -9,7 +9,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './product-category-menu.html',
   styleUrl: './product-category-menu.css',
 })
-export class ProductCategoryMenu {
+export class ProductCategoryMenu implements OnInit {
   productCategories = signal<ProductCategory[]>([]);
 
   constructor(private productService: ProductService) { };
