@@ -46,7 +46,9 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select name="countryInput" id="countryInput" formControlName="country">
-                  <option value=""></option>
+                @for (country of countries; track country) {
+                  <option value="{{country}}">{{country}}</option>
+                }
                 </select>
               </div>
             </div>
@@ -78,7 +80,9 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select name="stateInput" id="stateInput" formControlName="state">
-                  <option value=""></option>
+                @for (state of states; track state) {
+                  <option value="{{state}}">{{state}}</option>
+                }
                 </select>
               </div>
             </div>
@@ -104,7 +108,9 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select name="countryInput" id="countryInput" formControlName="country">
-                  <option value=""></option>
+                @for (country of countries; track country) {
+                  <option value="{{country}}">{{country}}</option>
+                }
                 </select>
               </div>
             </div>
@@ -136,7 +142,9 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select name="stateInput" id="stateInput" formControlName="state">
-                  <option value=""></option>
+                @for (state of states; track state) {
+                  <option value="{{state}}">{{state}}</option>
+                }
                 </select>
               </div>
             </div>
@@ -162,7 +170,9 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select name="typeInput" id="typeInput" formControlName="type">
-                  <option value=""></option>
+                  @for (type of cardTypes; track type) {
+                    <option value="{{type}}">{{type}}</option>
+                  }
                 </select>
               </div>
             </div>
@@ -203,8 +213,10 @@
             </div>
             <div class="col-md-9">
               <div class="input-space">
-                <select name="expInput" id="expInput" formControlName="expirationMonth">
-                  <option value=""></option>
+                <select name="expInput" id="expInput" formControlName="expirationMonth" (change)="handleMonthsandYears()">
+                  @for (month of cardMonths; track month) {
+                    <option value="{{month}}">{{month}}</option>
+                  }
                 </select>
               </div>
             </div>
@@ -215,8 +227,10 @@
             </div>
             <div class="col-md-9">
               <div class="input-space">
-                <select name="expYearInput" id="expYearInput" formControlName="expirationYear">
-                  <option value=""></option>
+                <select name="expYearInput" id="expYearInput" formControlName="expirationYear" (change)="handleMonthsandYears()">
+                  @for (year of cardYears; track year) {
+                    <option value="{{year}}">{{year}}</option>
+                  }
                 </select>
               </div>
             </div>
