@@ -45,9 +45,13 @@
             </div>
             <div class="col-md-9">
               <div class="input-space">
-                <select name="countryInput" id="countryInput" formControlName="country">
-                @for (country of countries; track country) {
-                  <option value="{{country}}">{{country}}</option>
+                <select 
+                  name="countryInput" 
+                  id="countryInput" 
+                  formControlName="country" 
+                  (change)="handleStates('shipping')">
+                @for (country of countries(); track country.id) {
+                  <option value="{{country}}" [ngValue]="country">{{country.name}}</option>
                 }
                 </select>
               </div>
@@ -80,8 +84,10 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select name="stateInput" id="stateInput" formControlName="state">
-                @for (state of states; track state) {
-                  <option value="{{state}}">{{state}}</option>
+                @for (state of shippingStates(); track state.id) {
+                  @if (shippingStates().length > 1) {
+                  <option value="{{state.name}}">{{state.name}}</option>
+                  }
                 }
                 </select>
               </div>
@@ -99,6 +105,14 @@
           </div>
         </div>
 
+        <!-- Add check box to copy shipping to billing -->
+        <div class="input-space">
+          <label class="au-checkbox">
+            <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
+            <span class="au-checkmark"></span>Billing Address same as Shipping Address
+          </label>
+        </div>
+
         <div formGroupName="billing" class="form-area">
           <h3>Billing</h3>
           <div class="row">
@@ -107,9 +121,9 @@
             </div>
             <div class="col-md-9">
               <div class="input-space">
-                <select name="countryInput" id="countryInput" formControlName="country">
-                @for (country of countries; track country) {
-                  <option value="{{country}}">{{country}}</option>
+                <select name="countryInput" id="countryInput" formControlName="country" (change)="handleStates('billing')">
+                @for (country of countries(); track country.id) {
+                  <option value="{{country}}" [ngValue]="country">{{country.name}}</option>
                 }
                 </select>
               </div>
@@ -142,8 +156,10 @@
             <div class="col-md-9">
               <div class="input-space">
                 <select name="stateInput" id="stateInput" formControlName="state">
-                @for (state of states; track state) {
-                  <option value="{{state}}">{{state}}</option>
+                @for (state of billingStates(); track state.id) {
+                  @if (billingStates().length > 1) {
+                  <option value="{{state.name}}">{{state.name}}</option>
+                  } 
                 }
                 </select>
               </div>

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
+import { Country, State } from '../common/state-country';
 
-export interface Country {
-  id: number;
-  code: string;
-  name: string;
+export interface GetResponseCountry {
+  _embedded: {
+    countries: Country[]
+  }
 };
 
-export interface State {
-  id: number;
-  code: string;
-  name: string;
-};
+export interface GetResponseState {
+  _embedded: {
+    states: State[]
+  }
+}
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,9 @@ export class FormService {
   };
 
   getCountries(): Observable<Country[]> {
-    return this.httpClient.get<Country[]>(this.countriesUrl);
+    return this.httpClient.get<GetResponseCountry>(this.countriesUrl).pipe(
+      map(response => response._embedded.countries)
+    );
   };
 
   getCountryById(countryId: number): Observable<Country> {
@@ -48,10 +51,14 @@ export class FormService {
   }
 
   getStates(): Observable<State[]> {
-    return this.httpClient.get<State[]>(this.statesUrl);
+    return this.httpClient.get<GetResponseState>(this.statesUrl).pipe(
+      map(response => response._embedded.states)
+    );
   };
 
   getStatesByCountryCode(code: string): Observable<State[]> {
-    return this.httpClient.get<State[]>(`${this.statesUrl}/search/findByCountryCode?code=${code}`);
+    return this.httpClient.get<GetResponseState>(`${this.statesUrl}/search/findByCountryCode?code=${code}`).pipe(
+      map(response => response._embedded.states)
+    );
   }
 };
