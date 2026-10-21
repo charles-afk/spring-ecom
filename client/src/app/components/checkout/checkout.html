@@ -1,0 +1,237 @@
+
+
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+        <div formGroupName="customer" class="form-area">
+          <h3>Customer</h3>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="fistNameInput">First Name</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="fistNameInput" type="text" formControlName="firstName">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="lastNameInput">Last Name</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="lastNameInput" type="text" formControlName="lastName">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="emailInput">Email</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="emailInput" type="text" formControlName="email">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div formGroupName="shipping" class="form-area">
+          <h3>Shipping</h3>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="countryInput">Country</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <select name="countryInput" id="countryInput" formControlName="country">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="streetInput">Street</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="streetInput" type="text" formControlName="street">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="streetInput">City</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="cityInput" type="text" formControlName="city">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="stateInput">State</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <select name="stateInput" id="stateInput" formControlName="state">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="zipInput">Zip Code</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="zipInput" type="text" formControlName="zipcode">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div formGroupName="billing" class="form-area">
+          <h3>Billing</h3>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="countryInput">Country</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <select name="countryInput" id="countryInput" formControlName="country">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="streetInput">Street</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="streetInput" type="text" formControlName="street">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="streetInput">City</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="cityInput" type="text" formControlName="city">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="stateInput">State</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <select name="stateInput" id="stateInput" formControlName="state">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="zipInput">Zip Code</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="zipInput" type="text" formControlName="zipcode">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div formGroupName="card" class="form-area">
+          <h3>Credit Card</h3>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="typeInput">Card Type</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <select name="typeInput" id="typeInput" formControlName="type">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="cardNameInput">Name on Card</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="cardNameInput" type="text" formControlName="name">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="cardNumberInput">Card Number</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="cardNumberInput" type="text" formControlName="number">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="securityInput">Security Code</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input id="securityInput" type="text" formControlName="security">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="expInput">Expiration Month</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <select name="expInput" id="expInput" formControlName="expirationMonth">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="expYearInput">Expiration Year</label>
+            </div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <select name="expYearInput" id="expYearInput" formControlName="expirationYear">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-area">
+          <h3>Review Your Order</h3>
+          <p>Total Quantity: {{ cartService.totalQuantity() }}</p>
+          <p>Shipping: FREE</p>
+          <p>Total Price: {{ cartService.total() | currency: 'USD' }}</p>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-info">Purchase</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
