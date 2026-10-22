@@ -1,9 +1,10 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { CartService } from '../../services/cart'
 import { FormService } from '../../services/form';
 import { Country, State } from '../../common/state-country';
+import { CustomValidators } from '../../validators/custom-validators';
 
 @Component({
   selector: 'app-checkout',
@@ -23,39 +24,40 @@ export class Checkout implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public cartService: CartService,
-    public formService: FormService
+    public formService: FormService,
   ) { }
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: ['']
+        firstName: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        lastName: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        email: new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'), CustomValidators.notOnlyWhitespace]),
       }),
       shipping: this.formBuilder.group({
-        country: [''],
-        street: [''],
-        city: [''],
-        state: [''],
-        zipcode: ['']
+        country: new FormControl('', [Validators.required, CustomValidators.notOnlyWhitespace]),
+        street: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        city: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        state: new FormControl('', [Validators.required, CustomValidators.notOnlyWhitespace]),
+        zipcode: new FormControl('', [Validators.required, Validators.minLength(5), CustomValidators.notOnlyWhitespace]),
       }),
       billing: this.formBuilder.group({
-        country: [''],
-        street: [''],
-        city: [''],
-        state: [''],
-        zipcode: ['']
+        country: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        street: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        city: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        state: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        zipcode: new FormControl('', [Validators.required, Validators.minLength(5), CustomValidators.notOnlyWhitespace]),
       }),
       card: this.formBuilder.group({
-        type: [''],
-        name: [''],
-        number: [''],
-        security: [''],
-        expirationMonth: [''],
-        expirationYear: ['']
+        type: new FormControl('', [Validators.required, CustomValidators.notOnlyWhitespace]),
+        name: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
+        number: new FormControl('', [Validators.required, Validators.pattern('[0-9]{16}'), CustomValidators.notOnlyWhitespace]),
+        security: new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
+        expirationMonth: new FormControl('', [Validators.required, CustomValidators.notOnlyWhitespace]),
+        expirationYear: new FormControl('', [Validators.required, CustomValidators.notOnlyWhitespace]),
       })
     });
+
     this.formService
       .getCardYears()
       .subscribe(data => this.cardYears = data);
@@ -110,7 +112,86 @@ export class Checkout implements OnInit {
     }
   }
 
+  get firstName() {
+    return this.checkoutFormGroup.get('customer.firstName');
+  };
+
+  get lastName() {
+    return this.checkoutFormGroup.get('customer.lastName');
+  };
+
+  get email() {
+    return this.checkoutFormGroup.get('customer.email');
+  };
+
+  get shippingCountry() {
+    return this.checkoutFormGroup.get('shipping.country');
+  };
+
+  get shippingStreet() {
+    return this.checkoutFormGroup.get('shipping.street');
+  };
+
+  get shippingCity() {
+    return this.checkoutFormGroup.get('shipping.city');
+  };
+
+  get shippingState() {
+    return this.checkoutFormGroup.get('shipping.state');
+  };
+
+  get shippingZipcode() {
+    return this.checkoutFormGroup.get('shipping.zipcode');
+  };
+
+  get billingCountry() {
+    return this.checkoutFormGroup.get('billing.country');
+  };
+
+  get billingStreet() {
+    return this.checkoutFormGroup.get('billing.street');
+  };
+
+  get billingCity() {
+    return this.checkoutFormGroup.get('billing.city');
+  };
+
+  get billingState() {
+    return this.checkoutFormGroup.get('billing.state');
+  };
+
+  get billingZipcode() {
+    return this.checkoutFormGroup.get('billing.zipcode');
+  };
+
+  get type() {
+    return this.checkoutFormGroup.get('card.type');
+  }
+
+  get cardName() {
+    return this.checkoutFormGroup.get('card.name');
+  }
+
+  get number() {
+    return this.checkoutFormGroup.get('card.number');
+  }
+
+  get security() {
+    return this.checkoutFormGroup.get('card.security');
+  }
+
+  get expMonth() {
+    return this.checkoutFormGroup.get('card.expirationMonth');
+  }
+
+  get expYear() {
+    return this.checkoutFormGroup.get('card.expirationYear');
+  }
+
   onSubmit() { 
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+    }
     console.log(this.checkoutFormGroup);
   };
 };

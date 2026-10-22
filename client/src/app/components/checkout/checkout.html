@@ -6,6 +6,7 @@
       <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
         <div formGroupName="customer" class="form-area">
           <h3>Customer</h3>
+
           <div class="row">
             <div class="col-md-2">
               <label for="fistNameInput">First Name</label>
@@ -13,9 +14,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="fistNameInput" type="text" formControlName="firstName">
+                @if (firstName?.invalid && (firstName?.dirty || firstName?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (firstName?.errors?.['required'] || firstName?.errors?.['notOnlyWhitespace']) {
+                  <div>First Name is required</div>
+                  }
+                  @if (firstName?.errors?.['minlength']) {
+                  <div>First Name must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="lastNameInput">Last Name</label>
@@ -23,9 +35,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="lastNameInput" type="text" formControlName="lastName">
+                @if (lastName?.invalid && (lastName?.dirty || lastName?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (lastName?.errors?.['required'] || lastName?.errors?.['notOnlyWhitespace']) {
+                  <div>Last Name is required</div>
+                  }
+                  @if (lastName?.errors?.['minlength']) {
+                  <div>Last Name must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="emailInput">Email</label>
@@ -33,12 +56,25 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="emailInput" type="text" formControlName="email">
+                @if (email?.invalid && (email?.dirty || email?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (email?.errors?.['required'] || email?.errors?.['notOnlyWhitespace']) {
+                  <div>Email is required</div>
+                  }
+                  @if (email?.errors?.['minlength']) {
+                  <div>Email must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
         </div>
+
         <div formGroupName="shipping" class="form-area">
           <h3>Shipping</h3>
+
           <div class="row">
             <div class="col-md-2">
               <label for="countryInput">Country</label>
@@ -54,9 +90,20 @@
                   <option value="{{country}}" [ngValue]="country">{{country.name}}</option>
                 }
                 </select>
+                @if (shippingCountry?.invalid && (shippingCountry?.dirty || shippingCountry?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (shippingCountry?.errors?.['required'] || shippingCountry?.errors?.['notOnlyWhitespace']) {
+                  <div>Country is required</div>
+                  }
+                  @if (shippingCountry?.errors?.['minlength']) {
+                  <div>Country must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="streetInput">Street</label>
@@ -64,9 +111,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="streetInput" type="text" formControlName="street">
+                @if (shippingStreet?.invalid && (shippingStreet?.dirty || shippingStreet?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (shippingStreet?.errors?.['required'] || shippingStreet?.errors?.['notOnlyWhitespace']) {
+                  <div>Street is required</div>
+                  }
+                  @if (shippingStreet?.errors?.['minlength']) {
+                  <div>Street must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="streetInput">City</label>
@@ -74,9 +132,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="cityInput" type="text" formControlName="city">
+                @if (shippingCity?.invalid && (shippingCity?.dirty || shippingCity?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (shippingCity?.errors?.['required'] || shippingCity?.errors?.['notOnlyWhitespace']) {
+                  <div>City is required</div>
+                  }
+                  @if (shippingCity?.errors?.['minlength']) {
+                  <div>City must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="stateInput">State</label>
@@ -90,9 +159,20 @@
                   }
                 }
                 </select>
+                @if (shippingState?.invalid && (shippingState?.dirty || shippingState?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (shippingState?.errors?.['required'] || shippingState?.errors?.['notOnlyWhitespace']) {
+                  <div>State is required</div>
+                  }
+                  @if (shippingState?.errors?.['minlength']) {
+                  <div>State must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="zipInput">Zip Code</label>
@@ -100,9 +180,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="zipInput" type="text" formControlName="zipcode">
+                @if (shippingZipcode?.invalid && (shippingZipcode?.dirty || shippingZipcode?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (shippingZipcode?.errors?.['required'] || shippingZipcode?.errors?.['notOnlyWhitespace']) {
+                  <div>Zip code is required</div>
+                  }
+                  @if (shippingZipcode?.errors?.['minlength']) {
+                  <div>Zip code must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
         </div>
 
         <!-- Add check box to copy shipping to billing -->
@@ -115,6 +206,7 @@
 
         <div formGroupName="billing" class="form-area">
           <h3>Billing</h3>
+
           <div class="row">
             <div class="col-md-2">
               <label for="countryInput">Country</label>
@@ -126,9 +218,20 @@
                   <option value="{{country}}" [ngValue]="country">{{country.name}}</option>
                 }
                 </select>
+                @if (billingCountry?.invalid && (billingCountry?.dirty || billingCountry?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (billingCountry?.errors?.['required'] || billingCountry?.errors?.['notOnlyWhitespace']) {
+                  <div>Country is required</div>
+                  }
+                  @if (billingCountry?.errors?.['minlength']) {
+                  <div>Country must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="streetInput">Street</label>
@@ -136,9 +239,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="streetInput" type="text" formControlName="street">
+                @if (billingStreet?.invalid && (billingStreet?.dirty || billingStreet?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (billingStreet?.errors?.['required'] || billingStreet?.errors?.['notOnlyWhitespace']) {
+                  <div>Street is required</div>
+                  }
+                  @if (billingStreet?.errors?.['minlength']) {
+                  <div>Street must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="streetInput">City</label>
@@ -146,9 +260,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="cityInput" type="text" formControlName="city">
+                @if (billingCity?.invalid && (billingCity?.dirty || billingCity?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (billingCity?.errors?.['required'] || billingCity?.errors?.['notOnlyWhitespace']) {
+                  <div>City is required</div>
+                  }
+                  @if (billingCity?.errors?.['minlength']) {
+                  <div>City must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="stateInput">State</label>
@@ -162,9 +287,20 @@
                   } 
                 }
                 </select>
+                @if (billingState?.invalid && (billingState?.dirty || billingState?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (billingState?.errors?.['required'] || billingState?.errors?.['notOnlyWhitespace']) {
+                  <div>State is required</div>
+                  }
+                  @if (billingState?.errors?.['minlength']) {
+                  <div>State must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="zipInput">Zip Code</label>
@@ -172,13 +308,25 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="zipInput" type="text" formControlName="zipcode">
+                @if (billingZipcode?.invalid && (billingZipcode?.dirty || billingZipcode?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (billingZipcode?.errors?.['required'] || billingZipcode?.errors?.['notOnlyWhitespace']) {
+                  <div>Zip code is required</div>
+                  }
+                  @if (billingZipcode?.errors?.['minlength']) {
+                  <div>Zip code must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
         </div>
 
         <div formGroupName="card" class="form-area">
           <h3>Credit Card</h3>
+
           <div class="row">
             <div class="col-md-2">
               <label for="typeInput">Card Type</label>
@@ -190,9 +338,20 @@
                     <option value="{{type}}">{{type}}</option>
                   }
                 </select>
+                @if (type?.invalid && (type?.dirty || type?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (type?.errors?.['required'] || type?.errors?.['notOnlyWhitespace']) {
+                  <div>Card type is required</div>
+                  }
+                  @if (type?.errors?.['minlength']) {
+                  <div>Card type must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="cardNameInput">Name on Card</label>
@@ -200,9 +359,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="cardNameInput" type="text" formControlName="name">
+                @if (cardName?.invalid && (cardName?.dirty || cardName?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (cardName?.errors?.['required'] || cardName?.errors?.['notOnlyWhitespace']) {
+                  <div>Name is required</div>
+                  }
+                  @if (cardName?.errors?.['minlength']) {
+                  <div>Name must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="cardNumberInput">Card Number</label>
@@ -210,9 +380,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="cardNumberInput" type="text" formControlName="number">
+                @if (number?.invalid && (number?.dirty || number?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (number?.errors?.['required'] || number?.errors?.['notOnlyWhitespace']) {
+                  <div>Card number is required</div>
+                  }
+                  @if (number?.errors?.['minlength']) {
+                  <div>Card number must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="securityInput">Security Code</label>
@@ -220,9 +401,20 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input id="securityInput" type="text" formControlName="security">
+                @if (security?.invalid && (security?.dirty || security?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (security?.errors?.['required'] || security?.errors?.['notOnlyWhitespace']) {
+                  <div>Security code is required</div>
+                  }
+                  @if (security?.errors?.['minlength']) {
+                  <div>Security code must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="expInput">Expiration Month</label>
@@ -234,9 +426,20 @@
                     <option value="{{month}}">{{month}}</option>
                   }
                 </select>
+                @if (expMonth?.invalid && (expMonth?.dirty || expMonth?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (expMonth?.errors?.['required'] || expMonth?.errors?.['notOnlyWhitespace']) {
+                  <div>Expiration month is required</div>
+                  }
+                  @if (expMonth?.errors?.['minlength']) {
+                  <div>Expiration month must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2">
               <label for="expYearInput">Expiration Year</label>
@@ -248,9 +451,20 @@
                     <option value="{{year}}">{{year}}</option>
                   }
                 </select>
+                @if (expYear?.invalid && (expYear?.dirty || expYear?.touched)) {
+                <div class="alert alert-danger mt-2">
+                  @if (expYear?.errors?.['required'] || expYear?.errors?.['notOnlyWhitespace']) {
+                  <div>Expiration year is required</div>
+                  }
+                  @if (expYear?.errors?.['minlength']) {
+                  <div>Expiration year must be at least 2 characters long</div>
+                  }
+                </div>
+                }
               </div>
             </div>
           </div>
+
         </div>
         <div class="form-area">
           <h3>Review Your Order</h3>
