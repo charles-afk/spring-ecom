@@ -86,8 +86,8 @@
                   id="countryInput" 
                   formControlName="country" 
                   (change)="handleStates('shipping')">
-                @for (country of countries(); track country.name) {
-                  <option [ngValue]="country">{{country.name}}</option>
+                @for (country of countries(); track country.id) {
+                  <option value="{{country}}" [ngValue]="country">{{country.name}}</option>
                 }
                 </select>
                 @if (shippingCountry?.invalid && (shippingCountry?.dirty || shippingCountry?.touched)) {
@@ -148,14 +148,14 @@
 
           <div class="row">
             <div class="col-md-2">
-              <label for="stateInput">State</label>
+              <label for="shippingStateInput">State</label>
             </div>
             <div class="col-md-9">
               <div class="input-space">
-                <select name="stateInput" id="stateInput" formControlName="state">
-                @for (state of shippingStates(); track state.name) {
+                <select name="shippingStateInput" id="shippingStateInput" formControlName="state">
+                @for (state of shippingStates(); track state.id) {
                   @if (shippingStates().length > 1) {
-                  <option value="{{state.name}}">{{state.name}}</option>
+                  <option value="{{state}}">{{state.name}}</option>
                   }
                 }
                 </select>
@@ -283,7 +283,7 @@
                 <select name="stateInput" id="stateInput" formControlName="state">
                 @for (state of billingStates(); track state.name) {
                   @if (billingStates().length > 1) {
-                  <option value="{{state.name}}">{{state.name}}</option>
+                  <option value="{{state}}">{{state.name}}</option>
                   } 
                 }
                 </select>

@@ -2,13 +2,10 @@ import { Component, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import { Router } from '@angular/router';
-
 import { CartService } from '../../services/cart'
 import { FormService } from '../../services/form';
 import { CheckoutService } from '../../services/checkout';
-
 import { CustomValidators } from '../../validators/custom-validators';
-
 import { Order } from '../../common/order';
 import { OrderItem } from '../../common/order-item';
 import { Purchase } from '../../common/purchase';
@@ -101,9 +98,8 @@ export class Checkout implements OnInit {
 
   handleStates(formType: string) {
     const formGroup = this.checkoutFormGroup.get(formType);
-    console.log(formGroup?.value);
     const selectedCountryCode: string = formGroup?.value.country.code;
-
+    
     this.formService
       .getStatesByCountryCode(selectedCountryCode)
       .subscribe(data => {
@@ -141,7 +137,7 @@ export class Checkout implements OnInit {
     const billingState = new State(billingForm.state.id, billingForm.state.name);
     const billingCountry = new Country(billingForm.country.id, billingForm.country.name, billingForm.country.code);
 
-    const purchase: Purchase = new Purchase(
+    const purchase = new Purchase(
       new Customer(customerForm.firstName, customerForm.lastName, customerForm.email), 
       new Address(shippingForm.street, shippingForm.city, shippingState, shippingCountry, shippingForm.zipCode), 
       new Address(billingForm.street, billingForm.city, billingState, billingCountry, billingForm.zipCode), 
