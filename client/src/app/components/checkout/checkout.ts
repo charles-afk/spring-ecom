@@ -143,9 +143,7 @@ export class Checkout implements OnInit {
       new Address(billingForm.street, billingForm.city, billingState, billingCountry, billingForm.zipCode), 
       order, order.cartItems.map(cartItem => new OrderItem(cartItem))
     );
-
-    console.log(purchase)
-
+    
     this.checkoutService
       .placeOrder(purchase)
       .subscribe({
