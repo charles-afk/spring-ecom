@@ -144,6 +144,8 @@ export class Checkout implements OnInit {
       order, order.cartItems.map(cartItem => new OrderItem(cartItem))
     );
 
+    console.log(purchase)
+
     this.checkoutService
       .placeOrder(purchase)
       .subscribe({
