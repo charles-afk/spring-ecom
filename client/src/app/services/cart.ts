@@ -9,7 +9,7 @@ export class CartService {
   total = signal<number>(0);
   totalQuantity = signal<number>(0);
 
-  updateCart(product: CartItem, decremented: boolean = false) {
+  updateCart(product: CartItem, decremented: boolean = false): void {
     let updatedCart = this.cartItems();
     const existingCartItem = this.cartItems().find((item: CartItem) => item.id === product.id);
   
@@ -20,7 +20,7 @@ export class CartService {
     } else if (existingCartItem && decremented && existingCartItem.quantity == 1) {
       updatedCart = updatedCart.filter((item: CartItem) => item.id !== product.id);
     } else {
-      updatedCart = [ ...this.cartItems(), product];
+      updatedCart = [ ...this.cartItems(), product ];
     }
 
     this.cartItems.set(updatedCart);
@@ -28,11 +28,6 @@ export class CartService {
     this.totalQuantity.set(updatedCart.reduce((runningTotal: number, currentItem: CartItem) => runningTotal + currentItem.quantity, 0));
   };
 
-  incrementQuantity(cartItem: CartItem) {
-    this.updateCart(cartItem, false);
-  };
-
-  decrementQuantity(cartItem: CartItem) {
-    this.updateCart(cartItem, true);
-  };
+  incrementQuantity(cartItem: CartItem): void { this.updateCart(cartItem, false) };
+  decrementQuantity(cartItem: CartItem): void { this.updateCart(cartItem, true) };
 };

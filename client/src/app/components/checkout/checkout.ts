@@ -1,10 +1,20 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
+import { Router } from '@angular/router';
+
 import { CartService } from '../../services/cart'
 import { FormService } from '../../services/form';
-import { Country, State } from '../../common/state-country';
+import { CheckoutService } from '../../services/checkout';
+
 import { CustomValidators } from '../../validators/custom-validators';
+
+import { Order } from '../../common/order';
+import { OrderItem } from '../../common/order-item';
+import { Purchase } from '../../common/purchase';
+import { Customer } from '../../common/customer';
+import { Address } from '../../common/address';
+import { Country, State } from '../../common/state-country';
 
 @Component({
   selector: 'app-checkout',
@@ -25,6 +35,8 @@ export class Checkout implements OnInit {
     private formBuilder: FormBuilder,
     public cartService: CartService,
     public formService: FormService,
+    private checkoutService: CheckoutService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -89,6 +101,7 @@ export class Checkout implements OnInit {
 
   handleStates(formType: string) {
     const formGroup = this.checkoutFormGroup.get(formType);
+    console.log(formGroup?.value);
     const selectedCountryCode: string = formGroup?.value.country.code;
 
     this.formService
@@ -97,7 +110,7 @@ export class Checkout implements OnInit {
         formType === 'shipping' ? 
           this.shippingStates.set(data) : 
           this.billingStates.set(data);
-        formGroup?.get('state')?.setValue(data[0].name);
+        formGroup?.get('state')?.setValue(data[0]);
       });
   };
 
@@ -191,7 +204,43 @@ export class Checkout implements OnInit {
   onSubmit() { 
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
+      return;
     }
-    console.log(this.checkoutFormGroup);
-  };
+
+    const customerForm = this.checkoutFormGroup.controls['customer'].value;
+    const shippingForm = this.checkoutFormGroup.controls['shipping'].value;
+    const billingForm = this.checkoutFormGroup.controls['billing'].value;
+    
+    const order = new Order(this.cartService.cartItems(), this.cartService.total(), this.cartService.totalQuantity());
+    const shippingState = new State(shippingForm.state.id, shippingForm.state.name);
+    const shippingCountry = new Country(shippingForm.country.id, shippingForm.country.name, shippingForm.country.code);
+    const billingState = new State(billingForm.state.id, billingForm.state.name);
+    const billingCountry = new Country(billingForm.country.id, billingForm.country.name, billingForm.country.code);
+
+    const purchase: Purchase = new Purchase(
+      new Customer(customerForm.firstName, customerForm.lastName, customerForm.email), 
+      new Address(shippingForm.street, shippingForm.city, shippingState, shippingCountry, shippingForm.zipCode), 
+      new Address(billingForm.street, billingForm.city, billingState, billingCountry, billingForm.zipCode), 
+      order, order.cartItems.map(cartItem => new OrderItem(cartItem))
+    );
+
+    this.checkoutService
+      .placeOrder(purchase)
+      .subscribe({
+        next: response => {
+          alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
+          this.resetCart();
+        },
+        error: err => alert(`There was an error: ${err.message}`) 
+      });
+  }
+  
+  resetCart() {
+    this.cartService.cartItems.set([]);
+    this.cartService.total.set(0);
+    this.cartService.totalQuantity.set(0);
+    this.checkoutFormGroup.reset();
+    this.router.navigateByUrl("/products");
+  }
+;
 };
