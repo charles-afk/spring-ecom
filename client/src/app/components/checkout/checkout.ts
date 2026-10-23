@@ -125,6 +125,48 @@ export class Checkout implements OnInit {
     }
   }
 
+  onSubmit() { 
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+      return;
+    }
+
+    const customerForm = this.checkoutFormGroup.controls['customer'].value;
+    const shippingForm = this.checkoutFormGroup.controls['shipping'].value;
+    const billingForm = this.checkoutFormGroup.controls['billing'].value;
+    
+    const order = new Order(this.cartService.cartItems(), this.cartService.total(), this.cartService.totalQuantity());
+    const shippingState = new State(shippingForm.state.id, shippingForm.state.name);
+    const shippingCountry = new Country(shippingForm.country.id, shippingForm.country.name, shippingForm.country.code);
+    const billingState = new State(billingForm.state.id, billingForm.state.name);
+    const billingCountry = new Country(billingForm.country.id, billingForm.country.name, billingForm.country.code);
+
+    const purchase: Purchase = new Purchase(
+      new Customer(customerForm.firstName, customerForm.lastName, customerForm.email), 
+      new Address(shippingForm.street, shippingForm.city, shippingState, shippingCountry, shippingForm.zipCode), 
+      new Address(billingForm.street, billingForm.city, billingState, billingCountry, billingForm.zipCode), 
+      order, order.cartItems.map(cartItem => new OrderItem(cartItem))
+    );
+
+    this.checkoutService
+      .placeOrder(purchase)
+      .subscribe({
+        next: response => {
+          alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
+          this.resetCart();
+        },
+        error: err => alert(`There was an error: ${err.message}`) 
+      });
+  };
+  
+  resetCart() {
+    this.cartService.cartItems.set([]);
+    this.cartService.total.set(0);
+    this.cartService.totalQuantity.set(0);
+    this.checkoutFormGroup.reset();
+    this.router.navigateByUrl("/products");
+  };
+
   get firstName() {
     return this.checkoutFormGroup.get('customer.firstName');
   };
@@ -179,68 +221,25 @@ export class Checkout implements OnInit {
 
   get type() {
     return this.checkoutFormGroup.get('card.type');
-  }
+  };
 
   get cardName() {
     return this.checkoutFormGroup.get('card.name');
-  }
+  };
 
   get number() {
     return this.checkoutFormGroup.get('card.number');
-  }
+  };
 
   get security() {
     return this.checkoutFormGroup.get('card.security');
-  }
+  };
 
   get expMonth() {
     return this.checkoutFormGroup.get('card.expirationMonth');
-  }
+  };
 
   get expYear() {
     return this.checkoutFormGroup.get('card.expirationYear');
-  }
-
-  onSubmit() { 
-    if (this.checkoutFormGroup.invalid) {
-      this.checkoutFormGroup.markAllAsTouched();
-      return;
-    }
-
-    const customerForm = this.checkoutFormGroup.controls['customer'].value;
-    const shippingForm = this.checkoutFormGroup.controls['shipping'].value;
-    const billingForm = this.checkoutFormGroup.controls['billing'].value;
-    
-    const order = new Order(this.cartService.cartItems(), this.cartService.total(), this.cartService.totalQuantity());
-    const shippingState = new State(shippingForm.state.id, shippingForm.state.name);
-    const shippingCountry = new Country(shippingForm.country.id, shippingForm.country.name, shippingForm.country.code);
-    const billingState = new State(billingForm.state.id, billingForm.state.name);
-    const billingCountry = new Country(billingForm.country.id, billingForm.country.name, billingForm.country.code);
-
-    const purchase: Purchase = new Purchase(
-      new Customer(customerForm.firstName, customerForm.lastName, customerForm.email), 
-      new Address(shippingForm.street, shippingForm.city, shippingState, shippingCountry, shippingForm.zipCode), 
-      new Address(billingForm.street, billingForm.city, billingState, billingCountry, billingForm.zipCode), 
-      order, order.cartItems.map(cartItem => new OrderItem(cartItem))
-    );
-
-    this.checkoutService
-      .placeOrder(purchase)
-      .subscribe({
-        next: response => {
-          alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
-          this.resetCart();
-        },
-        error: err => alert(`There was an error: ${err.message}`) 
-      });
-  }
-  
-  resetCart() {
-    this.cartService.cartItems.set([]);
-    this.cartService.total.set(0);
-    this.cartService.totalQuantity.set(0);
-    this.checkoutFormGroup.reset();
-    this.router.navigateByUrl("/products");
-  }
-;
+  };
 };
