@@ -8,6 +8,23 @@ export class CartService {
   cartItems = signal<CartItem[]>([]);
   total = signal<number>(0);
   totalQuantity = signal<number>(0);
+  storage: Storage = localStorage;
+
+  constructor() {
+    if (this.storage.getItem('cartItems') != null) 
+      this.computeCartTotals(JSON.parse(this.storage.getItem('cartItems')!));
+  }
+
+  computeCartTotals(updatedCart: CartItem[]) {
+    this.cartItems.set(updatedCart);
+    this.total.set(this.cartItems().reduce((runningTotal: number, currentItem: CartItem) => runningTotal + (currentItem.unitPrice * currentItem.quantity), 0));
+    this.totalQuantity.set(this.cartItems().reduce((runningTotal: number, currentItem: CartItem) => runningTotal + currentItem.quantity, 0));
+    this.persistCartItems();
+  }
+
+  persistCartItems() {
+    this.storage.setItem('cartItems', JSON.stringify(this.cartItems()));
+  }
 
   updateCart(product: CartItem, decremented: boolean = false): void {
     let updatedCart = this.cartItems();
@@ -23,9 +40,7 @@ export class CartService {
       updatedCart = [ ...this.cartItems(), product ];
     }
 
-    this.cartItems.set(updatedCart);
-    this.total.set(updatedCart.reduce((runningTotal: number, currentItem: CartItem) => runningTotal + (currentItem.unitPrice * currentItem.quantity), 0));
-    this.totalQuantity.set(updatedCart.reduce((runningTotal: number, currentItem: CartItem) => runningTotal + currentItem.quantity, 0));
+    this.computeCartTotals(updatedCart);
   };
 
   incrementQuantity(cartItem: CartItem): void { this.updateCart(cartItem, false) };

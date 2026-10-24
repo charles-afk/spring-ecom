@@ -1,12 +1,12 @@
 <div class="login-status-header">
-    @if (isAuthenticated) {
+    @if (isAuthenticated()) {
     <div class="login-status-user-info">
         Welcome back {{ userEmail }}!
     </div>
     }
-    @if (!isAuthenticated) {
+    @if (!isAuthenticated()) {
     <button (click)="login()" class="security-btn">Login</button>
-    } @else if (isAuthenticated) {
+    } @else if (isAuthenticated()) {
     <button (click)="logout()" class="security-btn">Logout</button>
     <button routerLink="/members" class="security-btn ml-1">Member</button>
     <button routerLink="/order-history" class="security-btn ms-1">Orders</button>

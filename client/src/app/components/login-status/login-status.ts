@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 
@@ -7,13 +7,13 @@ import { AuthService } from '@auth0/auth0-angular';
   selector: 'app-login-status',
   templateUrl: './login-status.html',
   styleUrl: './login-status.css',
-  imports: [ RouterLink ]
+  imports: [RouterLink]
 })
 export class LoginStatus {
-  isAuthenticated: boolean = false;
+  isAuthenticated= signal<boolean>(false);
   profileJson: string | undefined;
   userEmail: string | undefined;
-  storage: Storage = sessionStorage;
+  storage: Storage = localStorage;
 
   constructor(
     private auth: AuthService, 
@@ -22,21 +22,17 @@ export class LoginStatus {
 
   ngOnInit(): void {
     this.auth.isAuthenticated$.subscribe((authenticated: boolean) => {
-      this.isAuthenticated = authenticated;
+      this.isAuthenticated.set(authenticated);
     });
 
     this.auth.user$.subscribe((user) => {
       this.userEmail = user?.email;
-      this.storage.setItem('userEmail', JSON.stringify(this.userEmail));
+      this.storage.setItem('userEmail', JSON.stringify(user?.email));
     });
   }
 
   login() {
-    try {
     this.auth.loginWithRedirect();
-    } catch(e) {
-      console.log(e)
-    }
   }
 
   logout(): void {
