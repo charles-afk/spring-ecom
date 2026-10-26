@@ -39,7 +39,7 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         disableHttpFor(config, theUnsupportedActions, Order.class);
         exposeIds(config);
 
-        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
+        cors.addMapping(basePath + "/**").allowedOrigins(allowedOrigins);
     }
 
     private static void disableHttpFor(RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions, Class domainClass) {
