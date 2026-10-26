@@ -1,9 +1,6 @@
 package com.spring_ecom.server.config;
 
-import com.spring_ecom.server.entity.Country;
-import com.spring_ecom.server.entity.Product;
-import com.spring_ecom.server.entity.ProductCategory;
-import com.spring_ecom.server.entity.State;
+import com.spring_ecom.server.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -39,6 +36,7 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         disableHttpFor(config, theUnsupportedActions, ProductCategory.class);
         disableHttpFor(config, theUnsupportedActions, Country.class);
         disableHttpFor(config, theUnsupportedActions, State.class);
+        disableHttpFor(config, theUnsupportedActions, Order.class);
         exposeIds(config);
 
         cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);

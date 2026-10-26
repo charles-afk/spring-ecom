@@ -27,6 +27,7 @@ export class Checkout implements OnInit {
   countries =  signal<Country[]>([new Country(0, '', '')]);
   shippingStates =  signal<State[]>([new State(0, '')]);
   billingStates =  signal<State[]>([new State(0, '')]);
+  storage: Storage = localStorage;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,11 +38,12 @@ export class Checkout implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const email = JSON.parse(this.storage.getItem('userEmail')!) || '';
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
         lastName: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
-        email: new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'), CustomValidators.notOnlyWhitespace]),
+        email: new FormControl(email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'), CustomValidators.notOnlyWhitespace]),
       }),
       shipping: this.formBuilder.group({
         country: new FormControl('', [Validators.required, CustomValidators.notOnlyWhitespace]),
