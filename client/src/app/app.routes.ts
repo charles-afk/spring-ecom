@@ -5,6 +5,7 @@ import { CartDetails } from './components/cart-details/cart-details';
 import { Checkout } from './components/checkout/checkout';
 import { MembersPage } from './components/members-page/members-page';
 import { AuthGuard } from '@auth0/auth0-angular';
+import { OrderHistory } from './components/order-history/order-history';
 
 export const routes: Routes = [
     { path: 'search/:keyword', component: ProductList },
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'cart-details', component: CartDetails },
     { path: 'checkout', component: Checkout },
     { path: 'members', component: MembersPage, canActivate: [AuthGuard] },
+    { path: 'order-history', component: OrderHistory, canActivate: [AuthGuard]},
     { path: '', redirectTo: '/products', pathMatch: 'full' },
     { path: '**', redirectTo: '/products', pathMatch: 'full' }
 ];
