@@ -2,7 +2,6 @@
 
 .env
 /ssl-localhost
-localhost.conf
 
 # Compiled output
 /dist
