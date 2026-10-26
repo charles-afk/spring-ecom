@@ -6,7 +6,7 @@ import { CartItem } from '../common/cart-item';
 })
 export class CartService {
   cartItems = signal<CartItem[]>([]);
-  total = signal<number>(0);
+  totalPrice = signal<number>(0);
   totalQuantity = signal<number>(0);
   storage: Storage = localStorage;
 
@@ -17,7 +17,7 @@ export class CartService {
 
   computeCartTotals(updatedCart: CartItem[]) {
     this.cartItems.set(updatedCart);
-    this.total.set(this.cartItems().reduce((runningTotal: number, currentItem: CartItem) => runningTotal + (currentItem.unitPrice * currentItem.quantity), 0));
+    this.totalPrice.set(this.cartItems().reduce((runningTotal: number, currentItem: CartItem) => runningTotal + (currentItem.unitPrice * currentItem.quantity), 0));
     this.totalQuantity.set(this.cartItems().reduce((runningTotal: number, currentItem: CartItem) => runningTotal + currentItem.quantity, 0));
     this.persistCartItems();
   }
