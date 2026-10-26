@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OrderHistory } from '../common/order-history';
+import { Observable } from 'rxjs';
 
 interface GetResponseOrderHistory {
   _embedded: {
@@ -16,8 +17,8 @@ export class OrderHistoryService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getOrderHistory(email: string) {
-    const orderHistoryUrl = `${this.orderUrl}/search/findByCustomerEmail?email=${email}`;
+  getOrderHistory(email: string): Observable<GetResponseOrderHistory> {
+    const orderHistoryUrl = `${this.orderUrl}/search/findByCustomer_Email?email=${email}`;
     return this.httpClient.get<GetResponseOrderHistory>(orderHistoryUrl);
   }
 };

@@ -38,7 +38,10 @@ export class Checkout implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const email = JSON.parse(this.storage.getItem('userEmail')!) || '';
+    let email = ''
+    if (this.storage.getItem('userEmail') != 'undefined') 
+      email = JSON.parse(this.storage.getItem('userEmail')!) || '';
+    
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.notOnlyWhitespace]),
@@ -133,7 +136,7 @@ export class Checkout implements OnInit {
     const shippingForm = this.checkoutFormGroup.controls['shipping'].value;
     const billingForm = this.checkoutFormGroup.controls['billing'].value;
     
-    const order = new Order(this.cartService.cartItems(), this.cartService.total(), this.cartService.totalQuantity());
+    const order = new Order(this.cartService.cartItems(), this.cartService.totalPrice(), this.cartService.totalQuantity());
     const shippingState = new State(shippingForm.state.id, shippingForm.state.name);
     const shippingCountry = new Country(shippingForm.country.id, shippingForm.country.name, shippingForm.country.code);
     const billingState = new State(billingForm.state.id, billingForm.state.name);
@@ -145,7 +148,7 @@ export class Checkout implements OnInit {
       new Address(billingForm.street, billingForm.city, billingState, billingCountry, billingForm.zipCode), 
       order, order.cartItems.map(cartItem => new OrderItem(cartItem))
     );
-    
+
     this.checkoutService
       .placeOrder(purchase)
       .subscribe({
@@ -159,7 +162,7 @@ export class Checkout implements OnInit {
   
   resetCart() {
     this.cartService.cartItems.set([]);
-    this.cartService.total.set(0);
+    this.cartService.totalPrice.set(0);
     this.cartService.totalQuantity.set(0);
     this.checkoutFormGroup.reset();
     this.router.navigateByUrl("/products");

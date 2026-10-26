@@ -1,7 +1,7 @@
 <div class="cart-area d-n">
   <a routerLink="/cart-details">
     <div class="total">
-      {{ cartService.total() | currency: 'USD' }}
+      {{ cartService.totalPrice() | currency: 'USD' }}
       <span>{{ cartService.cartItems().length }}</span> 
     </div> 
     <i class="fa fa-shopping-cart" aria-hidden="true"></i>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { OrderHistoryService } from '../../services/order-history';
 import { OrderHistory as OrderHistoryType } from '../../common/order-history';
 import { CurrencyPipe, DatePipe } from '@angular/common';
@@ -10,7 +10,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
   styleUrl: './order-history.css',
 })
 export class OrderHistory implements OnInit {
-  orderHistoryList: OrderHistoryType[] = [];
+  orderHistoryList = signal<OrderHistoryType[]>([]);
   storage: Storage = localStorage;
 
   constructor(
@@ -24,7 +24,7 @@ export class OrderHistory implements OnInit {
   handleOrderHistory() {
     const email = JSON.parse(this.storage.getItem('userEmail')!);
     this.orderHistoryService.getOrderHistory(email).subscribe(data => {
-      this.orderHistoryList = data._embedded.orders;
+      this.orderHistoryList.set(data._embedded.orders);
     })
   }
 }
