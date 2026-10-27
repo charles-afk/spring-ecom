@@ -1,9 +1,9 @@
 export const environment = {
-    production: false,
-    apiUrl: 'http://localhost:8080/api',
-    featureFlag: true,
-    auth0: {
-        domain: '',
-        clientId: ''
-    }
+  production: false,
+  apiUrl: 'https://localhost:8443',
+  featureFlag: true,
+  auth0: {
+    domain: 'dev-ribr38hk4r55unoz.us.auth0.com',
+    clientId: 'jlCBVZSbzpA7eoMG9sv5D0RrvKnGjM71'
+  }
 };
