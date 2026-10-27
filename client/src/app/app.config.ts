@@ -4,11 +4,7 @@ import { provideAuth0 } from '@auth0/auth0-angular';
 import { routes } from './app.routes';
 import { AuthInterceptorService } from './services/auth-interceptor';
 import { environment } from '../environments/environment';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,13 +15,13 @@ export const appConfig: ApplicationConfig = {
       domain: environment.auth0.domain,
       clientId: environment.auth0.clientId,
       authorizationParams: {
-        redirect_uri: "https://localhost:4200",
-        audience: "http://localhost:8080",
+        redirect_uri: environment.auth0.authorizationParams.redirect_uri,
+        audience: environment.auth0.authorizationParams.audience,
       },
       httpInterceptor: {
         allowedList: [
-          'http://localhost:8080/api/orders/**',
-          'http://localhost:8080/api/checkout/purchase'
+          `${environment.apiUrl}/api/orders/**`,
+          `${environment.apiUrl}/api/checkout/purchase`
         ],
       },
     }),
