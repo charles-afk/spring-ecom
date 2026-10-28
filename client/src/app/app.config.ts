@@ -5,12 +5,14 @@ import { routes } from './app.routes';
 import { AuthInterceptorService } from './services/auth-interceptor';
 import { environment } from '../environments/environment';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { provideNgxStripe } from 'ngx-stripe';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    provideNgxStripe(environment.stripePublishableKey),
     provideAuth0({
       domain: environment.auth0.domain,
       clientId: environment.auth0.clientId,
@@ -21,7 +23,8 @@ export const appConfig: ApplicationConfig = {
       httpInterceptor: {
         allowedList: [
           `${environment.apiUrl}/api/orders/**`,
-          `${environment.apiUrl}/api/checkout/purchase`
+          `${environment.apiUrl}/api/checkout/purchase`,
+          `${environment.apiUrl}/api/checkout/payment-intent`
         ],
       },
     }),

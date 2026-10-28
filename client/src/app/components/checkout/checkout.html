@@ -3,6 +3,7 @@
 <div class="main-content">
   <div class="section-content section-content-p30">
     <div class="container-fluid">
+      @if(checkoutFormGroup){
       <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
         <div formGroupName="customer" class="form-area">
           <h3>Customer</h3>
@@ -324,148 +325,16 @@
 
         </div>
 
-        <div formGroupName="card" class="form-area">
-          <h3>Credit Card</h3>
+        <div class="form-area">
+          <h3>Credit or Debit Card</h3>
+          <div id="card-element">
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="typeInput">Card Type</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select name="typeInput" id="typeInput" formControlName="type">
-                  @for (type of cardTypes; track type) {
-                    <option value="{{type}}">{{type}}</option>
-                  }
-                </select>
-                @if (type?.invalid && (type?.dirty || type?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (type?.errors?.['required'] || type?.errors?.['notOnlyWhitespace']) {
-                  <div>Card type is required</div>
-                  }
-                  @if (type?.errors?.['minlength']) {
-                  <div>Card type must be at least 2 characters long</div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
           </div>
+          <div id="card-errors" class="displayError.textContent!=='':'alert alert-danger mt-1'">
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="cardNameInput">Name on Card</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="cardNameInput" type="text" formControlName="name">
-                @if (cardName?.invalid && (cardName?.dirty || cardName?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (cardName?.errors?.['required'] || cardName?.errors?.['notOnlyWhitespace']) {
-                  <div>Name is required</div>
-                  }
-                  @if (cardName?.errors?.['minlength']) {
-                  <div>Name must be at least 2 characters long</div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
           </div>
-
-          <div class="row">
-            <div class="col-md-2">
-              <label for="cardNumberInput">Card Number</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="cardNumberInput" type="text" formControlName="number">
-                @if (number?.invalid && (number?.dirty || number?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (number?.errors?.['required'] || number?.errors?.['notOnlyWhitespace']) {
-                  <div>Card number is required</div>
-                  }
-                  @if (number?.errors?.['minlength']) {
-                  <div>Card number must be at least 2 characters long</div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-2">
-              <label for="securityInput">Security Code</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="securityInput" type="text" formControlName="security">
-                @if (security?.invalid && (security?.dirty || security?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (security?.errors?.['required'] || security?.errors?.['notOnlyWhitespace']) {
-                  <div>Security code is required</div>
-                  }
-                  @if (security?.errors?.['minlength']) {
-                  <div>Security code must be at least 2 characters long</div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-2">
-              <label for="expInput">Expiration Month</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select name="expInput" id="expInput" formControlName="expirationMonth" (change)="handleMonthsandYears()">
-                  @for (month of cardMonths; track month) {
-                    <option value="{{month}}">{{month}}</option>
-                  }
-                </select>
-                @if (expMonth?.invalid && (expMonth?.dirty || expMonth?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (expMonth?.errors?.['required'] || expMonth?.errors?.['notOnlyWhitespace']) {
-                  <div>Expiration month is required</div>
-                  }
-                  @if (expMonth?.errors?.['minlength']) {
-                  <div>Expiration month must be at least 2 characters long</div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-2">
-              <label for="expYearInput">Expiration Year</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select name="expYearInput" id="expYearInput" formControlName="expirationYear" (change)="handleMonthsandYears()">
-                  @for (year of cardYears; track year) {
-                    <option value="{{year}}">{{year}}</option>
-                  }
-                </select>
-                @if (expYear?.invalid && (expYear?.dirty || expYear?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (expYear?.errors?.['required'] || expYear?.errors?.['notOnlyWhitespace']) {
-                  <div>Expiration year is required</div>
-                  }
-                  @if (expYear?.errors?.['minlength']) {
-                  <div>Expiration year must be at least 2 characters long</div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
-          </div>
-
         </div>
+
         <div class="form-area">
           <h3>Review Your Order</h3>
           <p>Total Quantity: {{ cartService.totalQuantity() }}</p>
@@ -476,6 +345,7 @@
           <button type="submit" class="btn btn-info">Purchase</button>
         </div>
       </form>
+    }
     </div>
   </div>
 </div>
