@@ -13,11 +13,10 @@ import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(configurer ->
+        http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(configurer ->
             configurer
                     .requestMatchers("/api/checkout/payment-intent").permitAll()
-                .requestMatchers("/api/orders/**")
-                .authenticated()
+                .requestMatchers("/api/orders/**").authenticated()
                     .anyRequest().permitAll())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .exceptionHandling(exception -> exception
