@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: 'https://localhost:8443',
+  stripePublishableKey: 'pk_test_51UV3NORhVwldFwDX3VpklHIzxvjuofwEB41BaxCjwAap2o2qRdXPkf0AmRahqDUtVscUcwNl24H7DiTvBImRCFli00a5T6uw1W',
   featureFlag: false,
   auth0: {
     domain: 'dev-ribr38hk4r55unoz.us.auth0.com',

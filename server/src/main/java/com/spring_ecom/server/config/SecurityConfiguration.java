@@ -15,6 +15,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(configurer ->
             configurer
+                    .requestMatchers("/api/checkout/payment-intent").permitAll()
                 .requestMatchers("/api/orders/**")
                 .authenticated()
                     .anyRequest().permitAll())

@@ -21,8 +21,11 @@
     "@fortawesome/fontawesome-free": "^7.3.1",
     "@ng-bootstrap/ng-bootstrap": "^20.0.0",
     "@popperjs/core": "^2.11.8",
+    "@stripe/stripe-js": "^10.2.0",
     "bootstrap": "^5.3.8",
+    "ngx-stripe": "^21.10.0",
     "rxjs": "~7.8.0",
+    "stripe": "^23.0.1",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
