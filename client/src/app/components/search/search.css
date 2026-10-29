@@ -1,0 +1,141 @@
+
+/* Search bar container */
+.store-search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  padding: 4px;
+  gap: 8px;
+
+  background: #172337;
+  border: 1px solid #334155;
+  border-radius: 10px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Focus anywhere inside the search bar */
+.store-search:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+  background: #1a2940;
+}
+
+/* Search icon */
+.store-search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 36px;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+/* Input */
+.store-search-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 4px;
+
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  background: transparent;
+
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.store-search-input::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.store-search-input:focus {
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  color: #f1f5f9;
+}
+
+/* Remove browser's default search decorations where supported */
+.store-search-input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+/* Search button */
+.store-search-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 88px;
+  height: 38px;
+  padding: 0 18px;
+
+  border: 0;
+  border-radius: 7px;
+  background: #3b82f6;
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.store-search-button:hover {
+  background: #2563eb;
+}
+
+.store-search-button:active {
+  transform: scale(0.98);
+}
+
+.store-search-button:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+/* Mobile */
+@media (max-width: 575.98px) {
+  .store-search {
+    height: 44px;
+    gap: 4px;
+  }
+
+  .store-search-icon {
+    flex-basis: 30px;
+  }
+
+  .store-search-input {
+    font-size: 0.9rem;
+  }
+
+  .store-search-button {
+    min-width: 72px;
+    height: 34px;
+    padding: 0 12px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .store-search,
+  .store-search-button {
+    transition: none;
+  }
+}

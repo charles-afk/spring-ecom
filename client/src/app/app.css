@@ -1,0 +1,382 @@
+
+/* Global layout */
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+.page-wrapper {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+/* Desktop sidebar */
+.menu-sidebar {
+  flex: 0 0 260px;
+  width: 260px;
+  min-width: 0;
+  padding: 0 16px 24px;
+  background: #fff;
+  border-right: 1px solid #e5eaf0;
+}
+
+/* Brand */
+.logo {
+  display: flex;
+  align-items: center;
+  min-height: 84px;
+  padding: 0 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #334155;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #1e293b;
+  text-decoration: none;
+}
+
+.brand-link:hover {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 750;
+  letter-spacing: -0.4px;
+}
+
+/* Main page column */
+.page-container {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Header */
+.header-desktop {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #e5eaf0;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 16px 28px;
+}
+
+.header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+}
+
+.header-search {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 680px;
+}
+
+/* Login and cart */
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.header-login,
+.header-cart {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+/* Routed content */
+.page-content {
+  flex: 1 0 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Footer */
+.site-footer {
+  width: 100%;
+  background: #fff;
+  border-top: 1px solid #e5eaf0;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px 28px;
+}
+
+.footer-copyright {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  cursor: pointer !important;
+}
+
+.footer-links a {
+  color: #64748b;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: color 0.15s ease;
+  cursor: pointer !important;
+}
+
+.footer-links a:hover {
+  color: #2563eb;
+}
+
+
+/* Overall application layout */
+.page-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background: var(--page-bg, #f8fafc);
+}
+
+.page-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+/* Header spacing */
+.header-desktop {
+  flex-shrink: 0;
+  padding: 0;
+}
+
+/* Main routed content */
+.page-content {
+  flex: 1 0 auto;
+  width: 100%;
+  min-width: 0;
+  padding: 28px 32px 40px;
+  background: var(--page-bg, #f8fafc);
+}
+
+/* Prevent routed pages from exceeding their parent */
+.page-content-inner {
+  width: 100%;
+  max-width: 1600px;
+  min-width: 0;
+  margin-inline: auto;
+}
+
+/* Footer */
+.site-footer {
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+/* Smaller desktops and tablets */
+@media (max-width: 991.98px) {
+  .page-content {
+    padding: 24px 22px 32px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 575.98px) {
+  .page-content {
+    padding: 16px 14px 28px;
+  }
+}
+
+/* Dark theme */
+body.dark-theme .page-wrapper,
+body.dark-theme .page-container,
+body.dark-theme .page-content {
+  background: var(--page-bg);
+  color: var(--text-primary);
+}
+
+
+/* Laptop adjustments */
+@media (max-width: 1199.98px) {
+  .menu-sidebar {
+    flex-basis: 230px;
+    width: 230px;
+  }
+
+  .header-inner {
+    padding: 14px 20px;
+  }
+
+  .header-wrap {
+    gap: 16px;
+  }
+
+  .header-actions {
+    gap: 14px;
+  }
+}
+
+/* Tablet and mobile */
+@media (max-width: 991.98px) {
+  .menu-sidebar {
+    flex-basis: 230px;
+    width: 100%;
+  }
+
+  .page-wrapper {
+    display: block;
+  }
+
+  .page-container {
+    width: 100%;
+  }
+
+  .header-inner {
+    padding: 12px 16px;
+  }
+
+  .header-wrap {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-search {
+    flex: 1 1 100%;
+    max-width: none;
+    order: 1;
+  }
+
+  .header-actions {
+    flex: 1 1 100%;
+    justify-content: space-between;
+    order: 2;
+  }
+
+  .footer-inner {
+    padding: 18px 16px;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 575.98px) {
+  .header-inner {
+    padding: 12px;
+  }
+
+  .header-actions {
+    gap: 10px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .footer-links {
+    gap: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-links a {
+    transition: none;
+  }
+}
+
+
+/* ==========================================
+   FORCE BOOTSTRAP TABLE INTO DARK THEME
+   ========================================== */
+
+body.dark-theme .orders-table,
+body.dark-theme .orders-table-wrapper {
+  --bs-table-bg: #1e293b;
+  --bs-table-color: #f1f5f9;
+  --bs-table-border-color: #334155;
+  --bs-table-accent-bg: transparent;
+  --bs-table-striped-bg: #263449;
+  --bs-table-striped-color: #f1f5f9;
+  --bs-table-hover-bg: #263449;
+  --bs-table-hover-color: #f1f5f9;
+
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark-theme .orders-table > thead > tr > th {
+  --bs-table-bg: #172337;
+  --bs-table-color: #a7b4c7;
+
+  background-color: #172337 !important;
+  color: #a7b4c7 !important;
+  border-color: #334155 !important;
+}
+
+body.dark-theme .orders-table > tbody > tr > td {
+  --bs-table-bg: #1e293b;
+  --bs-table-color: #f1f5f9;
+  --bs-table-accent-bg: transparent;
+
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border-color: #334155 !important;
+}
+
+body.dark-theme .orders-table > tbody > tr:hover > td {
+  --bs-table-bg: #263449;
+  --bs-table-color: #f1f5f9;
+
+  background-color: #263449 !important;
+  color: #f1f5f9 !important;
+}
+
+body.dark-theme .orders-table .order-price {
+  color: #4ade80 !important;
+}
+
+body.dark-theme .orders-table .order-quantity {
+  background-color: #172f52 !important;
+  color: #60a5fa !important;
+}

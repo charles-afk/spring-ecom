@@ -1,14 +1,55 @@
 <div class="detail-section">
-    <div class="container-fluid">
-        <img src="{{ product().imageUrl }}" alt="" class="detail-img">
-        <h3>{{ product().name }}</h3>
-        <div class="price">{{ product().unitPrice | currency: 'USD' }}</div>
-        <button (click)="addToCart(product())" class="btn btn-primary btn-sm">
-            Add to cart
+  <div class="container-fluid">
+
+    <a routerLink="/products" class="detail-back-link">
+      <span aria-hidden="true">&larr;</span>
+      Back to Products
+    </a>
+
+    <article class="product-detail-card">
+
+      <div class="detail-image-panel">
+        <img
+          [src]="product().imageUrl"
+          [alt]="product().name"
+          class="detail-img">
+      </div>
+
+      <div class="detail-info">
+
+        <span class="detail-eyebrow">Product Details</span>
+
+        <h1 class="detail-title">
+          {{ product().name }}
+        </h1>
+
+        <div class="detail-price">
+          {{ product().unitPrice | currency: 'USD' }}
+        </div>
+
+        <div class="detail-divider"></div>
+
+        <section class="detail-description">
+          <h2>Description</h2>
+          <p>{{ product().description }}</p>
+        </section>
+
+        <button
+          type="button"
+          (click)="addToCart(product())"
+          class="detail-add-button">
+          <span aria-hidden="true">+</span>
+          Add to Cart
         </button>
-        <hr>
-        <h4>Description</h4>
-        <p>{{ product().description }}</p>
-        <a routerLink="/products" class="mt-5">Back to Product List</a>
-    </div>
+
+        <p class="detail-note">
+          <span aria-hidden="true">&#10003;</span>
+          Ready to add to your shopping cart
+        </p>
+
+      </div>
+
+    </article>
+
+  </div>
 </div>

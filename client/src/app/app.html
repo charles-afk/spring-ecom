@@ -1,51 +1,64 @@
 <div class="page-wrapper">
 
-  <!-- MENU SIDEBAR-->
-  <aside class="menu-sidebar d-none d-lg-block">
+  <!-- Desktop category sidebar -->
+  <aside class="menu-sidebar">
     <div class="logo">
-      <a href="home.html">
-        <!-- <img src="" class="img-responsive"> -->
+      <a routerLink="/products" class="brand-link">
+        <span class="brand-mark">S</span>
+        <span class="brand-name">Storefront</span>
       </a>
     </div>
 
     <app-product-category-menu></app-product-category-menu>
-    
   </aside>
-  <!-- END MENU SIDEBAR-->
 
-  <!-- PAGE CONTAINER-->
+  <!-- Main page container -->
   <div class="page-container">
 
-    <!-- HEADER DESKTOP-->
+    <!-- Desktop header -->
     <header class="header-desktop">
-      <div class="section-content section-content-p30">
-        <div class="container-fluid">
-          <div class="header-wrap">
-            
+      <div class="header-inner">
+        <div class="header-wrap">
+
+          <div class="header-search">
             <app-search></app-search>
-            <app-login-status></app-login-status>
-            <app-cart-status></app-cart-status>
-            
           </div>
-          <div class="account-wrap"></div>
+
+          <div class="header-actions">
+            <div class="header-login">
+              <app-login-status></app-login-status>
+            </div>
+
+            <div class="header-cart">
+              <app-cart-status></app-cart-status>
+            </div>
+          </div>
+
         </div>
       </div>
     </header>
-		<!-- END HEADER DESKTOP-->
 
-    <!-- MAIN CONTENT-->
-    <router-outlet></router-outlet>
-
+    <!-- Routed page content -->
+    <main class="page-content">
+      <div class="page-content-inner">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
 
   </div>
-  <!-- ENDS PAGE CONTAINER -->
-
 </div>
 
-<footer>
-  <ul>
-    <li><a href="#">About Us</a></li>
-    <li><a href="#">Contact Us</a></li>
-    <li><a href="#">Help</a></li>
-  </ul>
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- <span class="footer-copyright">
+      © {{ currentYear }} Storefront
+    </span> -->
+
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://agudelo.dev" target="_blank">About Us</a>
+      <a href="https://www.agudelo.dev/contact-me" target="_blank">Contact Us</a>
+      <a href="https://github.com/charles-afk/spring-ecom" target="_blank">Help</a>
+    </nav>
+  </div>
 </footer>

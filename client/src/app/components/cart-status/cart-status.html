@@ -1,9 +1,22 @@
-<div class="cart-area d-n">
-  <a routerLink="/cart-details">
-    <div class="total">
-      {{ cartService.totalPrice() | currency: 'USD' }}
-      <span>{{ cartService.cartItems().length }}</span> 
-    </div> 
+<a
+  routerLink="/cart-details"
+  class="cart-status"
+  aria-label="View shopping cart"
+>
+  <span class="cart-status-icon">
     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-  </a>
-</div>
+
+    @if (cartService.cartItems().length > 0) {
+      <span class="cart-count">
+        {{ cartService.cartItems().length }}
+      </span>
+    }
+  </span>
+
+  <span class="cart-status-details">
+    <span class="cart-status-label">Shopping Cart</span>
+    <span class="cart-status-price">
+      {{ cartService.totalPrice() | currency: 'USD' }}
+    </span>
+  </span>
+</a>

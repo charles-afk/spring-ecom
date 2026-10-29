@@ -5,18 +5,18 @@ export class Address {
     city!: string;
     state!: State;
     country!: Country;
-    zipCode!: string;
+    zipcode!: string;
     constructor(
         street: string,
         city: string,
         state: State,
         country: Country,
-        zipCode: string,
+        zipcode: string,
     ) {
       this.street = street;
       this.city = city;
       this.state = state;
       this.country = country;
-      this.zipCode = zipCode;
+      this.zipcode = zipcode;
     }
 }

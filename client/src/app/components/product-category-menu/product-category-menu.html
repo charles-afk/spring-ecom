@@ -1,13 +1,25 @@
-<div class="menu-sidebar-content js-scrollbar1">
-    <nav class="navbar-sidebar">
-        <ul class="list-unstyled navbar-list">
-        @for (productCategory of productCategories(); track productCategory.id) {
-            <li>
-                <a routerLink="/category/{{ productCategory.id }}" routerLinkActive="active-link">
-                    {{ productCategory.categoryName }}
-                </a>
-            </li>
-        }
-        </ul>
-    </nav>
+<div class="category-sidebar">
+  <div class="category-sidebar-header">
+    <i class="bi bi-grid-3x3-gap-fill" aria-hidden="true"></i>
+    <span>Product Categories</span>
+  </div>
+
+  <nav class="category-sidebar-nav" aria-label="Product categories">
+    <ul class="category-menu">
+      @for (productCategory of productCategories(); track productCategory.id) {
+        <li>
+          <a
+            [routerLink]="['/category', productCategory.id]"
+            routerLinkActive="active-link"
+            ariaCurrentWhenActive="page"
+            class="category-menu-item"
+          >
+            <span class="category-menu-text">
+              {{ productCategory.categoryName }}
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
 </div>
