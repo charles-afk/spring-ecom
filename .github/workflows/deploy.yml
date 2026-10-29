@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'client/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
@@ -51,3 +54,10 @@ jobs:
           aws s3 sync dist/client/browser/ \
             s3://${{ vars.S3_BUCKET }}/ \
             --delete
+
+      - name: Invalidate CloudFront cache
+        working-directory: .
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}" \
+            --paths "/*"
