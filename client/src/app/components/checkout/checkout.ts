@@ -95,7 +95,24 @@ export class Checkout implements OnInit {
   
   setupStripePaymentForm() {
     var elements = this.stripe?.elements();
-    this.cardElement = elements?.create('card', { hidePostalCode: true });
+    this.cardElement = elements?.create('card', { 
+      hidePostalCode: true,
+      style: {
+        base: {
+          color: '#ffffff',
+          fontFamily: 'Arial, sans-serif',
+          fontSize: '16px',
+          '::placeholder': {
+            color: '#aaaaaa'
+          },
+          iconColor: '#ffffff'
+        },
+        invalid: {
+          color: '#ff6b6b',
+          iconColor: '#ff6b6b'
+        }
+      }
+    });
     this.cardElement.mount('#card-element');
     this.cardElement.on('change', (event: any) => {
       this.displayError = document.getElementById('card-errors');
@@ -133,6 +150,7 @@ export class Checkout implements OnInit {
   }
 
   onSubmit() { 
+    this.syncAutofilledValues();
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
       return;
@@ -150,8 +168,8 @@ export class Checkout implements OnInit {
 
     const purchase = new Purchase(
       new Customer(customerForm.firstName, customerForm.lastName, customerForm.email), 
-      new Address(shippingForm.street, shippingForm.city, shippingState, shippingCountry, shippingForm.zipCode), 
-      new Address(billingForm.street, billingForm.city, billingState, billingCountry, billingForm.zipCode), 
+      new Address(shippingForm.street, shippingForm.city, shippingState, shippingCountry, shippingForm.zipcode), 
+      new Address(billingForm.street, billingForm.city, billingState, billingCountry, billingForm.zipcode), 
       order, order.cartItems.map(cartItem => new OrderItem(cartItem))
     );
 
@@ -167,13 +185,14 @@ export class Checkout implements OnInit {
               line1: purchase.billingAddress.street,
               city: purchase.billingAddress.city,
               state: purchase.billingAddress.state.name,
-              postal_code: purchase.billingAddress.zipCode,
+              postal_code: purchase.billingAddress.zipcode,
               country: purchase.billingAddress.country.code
             }
           }
         } 
       };
       const options = { handleActions: false };
+
       this.stripe
         ?.confirmCardPayment(this.clientSecret(), data, options)
         .then((result: any) => {
@@ -210,6 +229,41 @@ export class Checkout implements OnInit {
     this.checkoutFormGroup.reset();
     this.router.navigateByUrl("/products");
   };
+
+  syncAutofilledValues(): void {
+    const form = document.querySelector('form');
+
+    if (!form) return;
+
+    const fields = [
+      'customer.firstName',
+      'customer.lastName',
+      'customer.email',
+      'shipping.street',
+      'shipping.city',
+      'shipping.zipcode',
+      'billing.street',
+      'billing.city',
+      'billing.zipcode'
+    ];
+
+    for (const path of fields) {
+      const control = this.checkoutFormGroup.get(path);
+      const name = path.split('.').pop();
+
+      const groupName = path.split('.')[0];
+
+      const input = form.querySelector<HTMLInputElement>(
+        `[formGroupName="${groupName}"] [formControlName="${name}"]`
+      );
+
+      if (control && input && input.value !== control.value) {
+        control.setValue(input.value);
+      }
+    }
+
+    this.checkoutFormGroup.updateValueAndValidity();
+  }
 
   get firstName() {
     return this.checkoutFormGroup.get('customer.firstName');

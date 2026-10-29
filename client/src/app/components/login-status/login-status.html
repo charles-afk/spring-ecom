@@ -1,14 +1,40 @@
-<div class="login-status-header">
-    @if (isAuthenticated()) {
-    <div class="login-status-user-info">
-        Welcome back {{ userEmail }}!
-    </div>
-    }
+<div class="login-status">
+
+  @if (isAuthenticated()) {
+    <span class="login-welcome">
+      <span class="welcome-label">Welcome back</span>
+      <span class="login-email">{{ userEmail }}</span>
+    </span>
+  }
+
+  <div class="login-actions">
     @if (!isAuthenticated()) {
-    <button (click)="login()" class="security-btn">Login</button>
-    } @else if (isAuthenticated()) {
-    <button (click)="logout()" class="security-btn">Logout</button>
-    <button routerLink="/members" class="security-btn ml-1">Member</button>
-    <button routerLink="/order-history" class="security-btn ms-1">Orders</button>
+      <button
+        type="button"
+        class="login-btn login-btn-primary"
+        (click)="login()">
+        Login
+      </button>
+    } @else {
+      <a
+        routerLink="/members"
+        class="login-btn login-btn-secondary">
+        Member
+      </a>
+
+      <a
+        routerLink="/order-history"
+        class="login-btn login-btn-secondary">
+        Orders
+      </a>
+
+      <button
+        type="button"
+        class="login-btn login-btn-primary"
+        (click)="logout()">
+        Logout
+      </button>
     }
+  </div>
+
 </div>

@@ -1,9 +1,19 @@
-<div class="form-header">
-    <input #searchInput class="au-input au-input-xl" type="text" name="search"
-    placeholder="Search for data ..." 
-    (keyup.enter)="searchProduct(searchInput.value)" />
+<form class="store-search" role="search" (submit)="$event.preventDefault(); searchProduct(searchInput.value)">
+  <div class="store-search-icon" aria-hidden="true">
+    <i class="bi bi-search"></i>
+  </div>
 
-    <button (click)="searchProduct(searchInput.value)" class="au-btn-submit" type="submit">
-        Search
-    </button>
-</div>
+  <input
+    #searchInput
+    class="store-search-input"
+    type="search"
+    name="search"
+    placeholder="Search products..."
+    aria-label="Search products"
+    autocomplete="off"
+  />
+
+  <button class="store-search-button" type="submit">
+    <span>Search</span>
+  </button>
+</form>

@@ -1,351 +1,288 @@
+<div class="checkout-page">
+  <div class="checkout-container">
 
+    <header class="checkout-header">
+      <div>
+        <h1>Checkout</h1>
+        <p>Enter your details to complete your purchase.</p>
+      </div>
+      <span class="checkout-secure-label">
+        <span aria-hidden="true">✓</span> Secure checkout
+      </span>
+    </header>
 
-<div class="main-content">
-  <div class="section-content section-content-p30">
-    <div class="container-fluid">
-      @if(checkoutFormGroup){
-      <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
-        <div formGroupName="customer" class="form-area">
-          <h3>Customer</h3>
+    @if (checkoutFormGroup) {
+      <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()"
+            class="checkout-form">
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="fistNameInput">First Name</label>
+        <div class="checkout-main">
+
+          <!-- Customer -->
+          <section formGroupName="customer" class="checkout-card">
+            <div class="checkout-card-heading">
+              <span class="checkout-step">1</span>
+              <div>
+                <h2>Customer Information</h2>
+                <p>How can we contact you?</p>
+              </div>
             </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="fistNameInput" type="text" formControlName="firstName">
+
+            <div class="checkout-fields">
+              <div class="checkout-field">
+                <label for="firstNameInput">First Name</label>
+                <input id="firstNameInput" type="text"
+                       formControlName="firstName" autocomplete="given-name">
                 @if (firstName?.invalid && (firstName?.dirty || firstName?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (firstName?.errors?.['required'] || firstName?.errors?.['notOnlyWhitespace']) {
-                  <div>First Name is required</div>
-                  }
-                  @if (firstName?.errors?.['minlength']) {
-                  <div>First Name must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">
+                    @if (firstName?.errors?.['required'] || firstName?.errors?.['notOnlyWhitespace']) {
+                      <span>First name is required.</span>
+                    }
+                    @if (firstName?.errors?.['minlength']) {
+                      <span>First name must be at least 2 characters.</span>
+                    }
+                  </div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="lastNameInput">Last Name</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="lastNameInput" type="text" formControlName="lastName">
+              <div class="checkout-field">
+                <label for="lastNameInput">Last Name</label>
+                <input id="lastNameInput" type="text"
+                       formControlName="lastName" autocomplete="family-name">
                 @if (lastName?.invalid && (lastName?.dirty || lastName?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (lastName?.errors?.['required'] || lastName?.errors?.['notOnlyWhitespace']) {
-                  <div>Last Name is required</div>
-                  }
-                  @if (lastName?.errors?.['minlength']) {
-                  <div>Last Name must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">
+                    @if (lastName?.errors?.['required'] || lastName?.errors?.['notOnlyWhitespace']) {
+                      <span>Last name is required.</span>
+                    }
+                    @if (lastName?.errors?.['minlength']) {
+                      <span>Last name must be at least 2 characters.</span>
+                    }
+                  </div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="emailInput">Email</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="emailInput" type="text" formControlName="email">
+              <div class="checkout-field checkout-field-full">
+                <label for="emailInput">Email Address</label>
+                <input id="emailInput" type="email"
+                       formControlName="email" autocomplete="email">
                 @if (email?.invalid && (email?.dirty || email?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (email?.errors?.['required'] || email?.errors?.['notOnlyWhitespace']) {
-                  <div>Email is required</div>
-                  }
-                  @if (email?.errors?.['minlength']) {
-                  <div>Email must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">
+                    @if (email?.errors?.['required'] || email?.errors?.['notOnlyWhitespace']) {
+                      <span>Email address is required.</span>
+                    }
+                    @if (email?.errors?.['pattern']) {
+                      <span>Enter a valid email address.</span>
+                    }
+                  </div>
                 }
               </div>
             </div>
-          </div>
+          </section>
 
-        </div>
-
-        <div formGroupName="shipping" class="form-area">
-          <h3>Shipping</h3>
-
-          <div class="row">
-            <div class="col-md-2">
-              <label for="countryInput">Country</label>
+          <!-- Shipping -->
+          <section formGroupName="shipping" class="checkout-card">
+            <div class="checkout-card-heading">
+              <span class="checkout-step">2</span>
+              <div>
+                <h2>Shipping Address</h2>
+                <p>Where should we send your order?</p>
+              </div>
             </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select 
-                  name="countryInput" 
-                  id="countryInput" 
-                  formControlName="country" 
-                  (change)="handleStates('shipping')">
-                @for (country of countries(); track country.id) {
-                  <option value="{{country}}" [ngValue]="country">{{country.name}}</option>
-                }
+
+            <div class="checkout-fields">
+              <div class="checkout-field checkout-field-full">
+                <label for="shippingCountryInput">Country</label>
+                <select id="shippingCountryInput" formControlName="country"
+                        (change)="handleStates('shipping')" autocomplete="country-name">
+                  <option [ngValue]="null" disabled>Select a country</option>
+                  @for (country of countries(); track country.id) {
+                    <option [ngValue]="country">{{ country.name }}</option>
+                  }
                 </select>
                 @if (shippingCountry?.invalid && (shippingCountry?.dirty || shippingCountry?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (shippingCountry?.errors?.['required'] || shippingCountry?.errors?.['notOnlyWhitespace']) {
-                  <div>Country is required</div>
-                  }
-                  @if (shippingCountry?.errors?.['minlength']) {
-                  <div>Country must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Please select a country.</div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="streetInput">Street</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="streetInput" type="text" formControlName="street">
+              <div class="checkout-field checkout-field-full">
+                <label for="shippingStreetInput">Street Address</label>
+                <input id="shippingStreetInput" type="text"
+                       formControlName="street" autocomplete="shipping address-line1">
                 @if (shippingStreet?.invalid && (shippingStreet?.dirty || shippingStreet?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (shippingStreet?.errors?.['required'] || shippingStreet?.errors?.['notOnlyWhitespace']) {
-                  <div>Street is required</div>
-                  }
-                  @if (shippingStreet?.errors?.['minlength']) {
-                  <div>Street must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Enter a street address (at least 2 characters).</div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="streetInput">City</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="cityInput" type="text" formControlName="city">
+              <div class="checkout-field">
+                <label for="shippingCityInput">City</label>
+                <input id="shippingCityInput" type="text"
+                       formControlName="city" autocomplete="shipping address-level2">
                 @if (shippingCity?.invalid && (shippingCity?.dirty || shippingCity?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (shippingCity?.errors?.['required'] || shippingCity?.errors?.['notOnlyWhitespace']) {
-                  <div>City is required</div>
-                  }
-                  @if (shippingCity?.errors?.['minlength']) {
-                  <div>City must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Enter a valid city.</div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="shippingStateInput">State</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select name="shippingStateInput" id="shippingStateInput" formControlName="state">
-                @for (state of shippingStates(); track state.id) {
-                  @if (shippingStates().length > 1) {
-                  <option value="{{state}}">{{state.name}}</option>
+              <div class="checkout-field">
+                <label for="shippingStateInput">State / Province</label>
+                <select id="shippingStateInput" formControlName="state"
+                        autocomplete="shipping address-level1">
+                  <option [ngValue]="null" disabled>Select a state</option>
+                  @for (state of shippingStates(); track state.id) {
+                    <option [ngValue]="state">{{ state.name }}</option>
                   }
-                }
                 </select>
                 @if (shippingState?.invalid && (shippingState?.dirty || shippingState?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (shippingState?.errors?.['required'] || shippingState?.errors?.['notOnlyWhitespace']) {
-                  <div>State is required</div>
-                  }
-                  @if (shippingState?.errors?.['minlength']) {
-                  <div>State must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Please select a state.</div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="zipInput">Zip Code</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="zipInput" type="text" formControlName="zipcode">
+              <div class="checkout-field">
+                <label for="shippingZipInput">ZIP / Postal Code</label>
+                <input id="shippingZipInput" type="text"
+                       formControlName="zipcode" autocomplete="shipping postal-code">
                 @if (shippingZipcode?.invalid && (shippingZipcode?.dirty || shippingZipcode?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (shippingZipcode?.errors?.['required'] || shippingZipcode?.errors?.['notOnlyWhitespace']) {
-                  <div>Zip code is required</div>
-                  }
-                  @if (shippingZipcode?.errors?.['minlength']) {
-                  <div>Zip code must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Enter a postal code (at least 5 characters).</div>
                 }
               </div>
             </div>
-          </div>
+          </section>
 
-        </div>
-
-        <!-- Add check box to copy shipping to billing -->
-        <div class="input-space">
-          <label class="au-checkbox">
-            <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
-            <span class="au-checkmark"></span>Billing Address same as Shipping Address
+          <!-- Billing address checkbox -->
+          <label class="billing-copy-option">
+            <input type="checkbox"
+                   (change)="copyShippingAddressToBillingAddress($event)">
+            <span class="custom-checkmark" aria-hidden="true"></span>
+            <span>
+              <strong>Billing address is the same as shipping</strong>
+              <small>Use the shipping details for billing.</small>
+            </span>
           </label>
-        </div>
 
-        <div formGroupName="billing" class="form-area">
-          <h3>Billing</h3>
-
-          <div class="row">
-            <div class="col-md-2">
-              <label for="countryInput">Country</label>
+          <!-- Billing -->
+          <section formGroupName="billing" class="checkout-card">
+            <div class="checkout-card-heading">
+              <span class="checkout-step">3</span>
+              <div>
+                <h2>Billing Address</h2>
+                <p>Enter the address associated with your payment method.</p>
+              </div>
             </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select name="countryInput" id="countryInput" formControlName="country" (change)="handleStates('billing')">
-                @for (country of countries(); track country.name) {
-                  <option value="{{country}}" [ngValue]="country">{{country.name}}</option>
-                }
+
+            <div class="checkout-fields">
+              <div class="checkout-field checkout-field-full">
+                <label for="billingCountryInput">Country</label>
+                <select id="billingCountryInput" formControlName="country"
+                        (change)="handleStates('billing')" autocomplete="billing country-name">
+                  <option [ngValue]="null" disabled>Select a country</option>
+                  @for (country of countries(); track country.id) {
+                    <option [ngValue]="country">{{ country.name }}</option>
+                  }
                 </select>
                 @if (billingCountry?.invalid && (billingCountry?.dirty || billingCountry?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (billingCountry?.errors?.['required'] || billingCountry?.errors?.['notOnlyWhitespace']) {
-                  <div>Country is required</div>
-                  }
-                  @if (billingCountry?.errors?.['minlength']) {
-                  <div>Country must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Please select a country.</div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="streetInput">Street</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="streetInput" type="text" formControlName="street">
+              <div class="checkout-field checkout-field-full">
+                <label for="billingStreetInput">Street Address</label>
+                <input id="billingStreetInput" type="text"
+                       formControlName="street" autocomplete="billing address-line1">
                 @if (billingStreet?.invalid && (billingStreet?.dirty || billingStreet?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (billingStreet?.errors?.['required'] || billingStreet?.errors?.['notOnlyWhitespace']) {
-                  <div>Street is required</div>
-                  }
-                  @if (billingStreet?.errors?.['minlength']) {
-                  <div>Street must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Enter a street address.</div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="streetInput">City</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="cityInput" type="text" formControlName="city">
+              <div class="checkout-field">
+                <label for="billingCityInput">City</label>
+                <input id="billingCityInput" type="text"
+                       formControlName="city" autocomplete="billing address-level2">
                 @if (billingCity?.invalid && (billingCity?.dirty || billingCity?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (billingCity?.errors?.['required'] || billingCity?.errors?.['notOnlyWhitespace']) {
-                  <div>City is required</div>
-                  }
-                  @if (billingCity?.errors?.['minlength']) {
-                  <div>City must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Enter a valid city.</div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="stateInput">State</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <select name="stateInput" id="stateInput" formControlName="state">
-                @for (state of billingStates(); track state.name) {
-                  @if (billingStates().length > 1) {
-                  <option value="{{state}}">{{state.name}}</option>
-                  } 
-                }
+              <div class="checkout-field">
+                <label for="billingStateInput">State / Province</label>
+                <select id="billingStateInput" formControlName="state"
+                        autocomplete="billing address-level1">
+                  <option [ngValue]="null" disabled>Select a state</option>
+                  @for (state of billingStates(); track state.id) {
+                    <option [ngValue]="state">{{ state.name }}</option>
+                  }
                 </select>
                 @if (billingState?.invalid && (billingState?.dirty || billingState?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (billingState?.errors?.['required'] || billingState?.errors?.['notOnlyWhitespace']) {
-                  <div>State is required</div>
-                  }
-                  @if (billingState?.errors?.['minlength']) {
-                  <div>State must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Please select a state.</div>
                 }
               </div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <label for="zipInput">Zip Code</label>
-            </div>
-            <div class="col-md-9">
-              <div class="input-space">
-                <input id="zipInput" type="text" formControlName="zipcode">
+              <div class="checkout-field">
+                <label for="billingZipInput">ZIP / Postal Code</label>
+                <input id="billingZipInput" type="text"
+                       formControlName="zipcode" autocomplete="billing postal-code">
                 @if (billingZipcode?.invalid && (billingZipcode?.dirty || billingZipcode?.touched)) {
-                <div class="alert alert-danger mt-2">
-                  @if (billingZipcode?.errors?.['required'] || billingZipcode?.errors?.['notOnlyWhitespace']) {
-                  <div>Zip code is required</div>
-                  }
-                  @if (billingZipcode?.errors?.['minlength']) {
-                  <div>Zip code must be at least 2 characters long</div>
-                  }
-                </div>
+                  <div class="field-error">Enter a postal code (at least 5 characters).</div>
                 }
               </div>
             </div>
+          </section>
+
+          <!-- Stripe payment element -->
+          <section class="checkout-card">
+            <div class="checkout-card-heading">
+              <span class="checkout-step">4</span>
+              <div>
+                <h2>Payment Details</h2>
+                <p>Pay securely with your credit or debit card.</p>
+              </div>
+            </div>
+
+            <div id="card-element" class="stripe-card-element"></div>
+            <div id="card-errors" class="field-error payment-error"
+                 role="alert" aria-live="polite"></div>
+
+            <p class="payment-security-note">
+              Your card details are handled securely by Stripe.
+            </p>
+            <p class="payment-security-note">
+              (Use Card Number: [4242 4242 4242 4242] and whatever CVC / expiration date combination to test out a Stripe payment!)
+            </p>
+          </section>
+
+        </div>
+
+        <!-- Order summary -->
+        <aside class="checkout-summary">
+          <div class="summary-heading">
+            <h2>Order Summary</h2>
+            <span>{{ cartService.totalQuantity() }} items</span>
           </div>
 
-        </div>
-
-        <div class="form-area">
-          <h3>Credit or Debit Card</h3>
-          <div id="card-element">
-
+          <div class="summary-line">
+            <span>Total Quantity</span>
+            <strong>{{ cartService.totalQuantity() }}</strong>
           </div>
-          <div id="card-errors" class="displayError.textContent!=='':'alert alert-danger mt-1'">
 
+          <div class="summary-line">
+            <span>Shipping</span>
+            <strong class="free-shipping">FREE</strong>
           </div>
-        </div>
 
-        <div class="form-area">
-          <h3>Review Your Order</h3>
-          <p>Total Quantity: {{ cartService.totalQuantity() }}</p>
-          <p>Shipping: FREE</p>
-          <p>Total Price: {{ cartService.totalPrice() | currency: 'USD' }}</p>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-info" [disabled]="isDisabled">Purchase</button>
-        </div>
+          <div class="summary-total">
+            <span>Total</span>
+            <strong>{{ cartService.totalPrice() | currency: 'USD' }}</strong>
+          </div>
+
+          <button type="submit" class="purchase-button"
+                  [disabled]="isDisabled">
+            {{ isDisabled ? 'Processing…' : 'Place Order' }}
+          </button>
+
+          <p class="summary-footnote">
+            Please review your information before placing your order.
+          </p>
+        </aside>
+
       </form>
     }
-    </div>
+
   </div>
 </div>

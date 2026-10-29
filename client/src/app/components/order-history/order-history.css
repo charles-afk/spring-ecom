@@ -1,0 +1,445 @@
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.orders-page {
+  min-height: 60vh;
+  padding-bottom: 40px;
+  color: var(--text-primary, #1e293b);
+}
+
+.orders-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.orders-title {
+  margin: 0 0 8px;
+  color: var(--text-primary, #1e293b);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+.orders-subtitle {
+  margin: 0;
+  color: var(--text-secondary, #64748b);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.orders-count {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 999px;
+  background: var(--surface, #fff);
+  color: var(--text-secondary, #64748b);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Desktop table */
+
+.orders-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 12px;
+  background: var(--surface, #fff);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.orders-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--text-primary, #1e293b);
+}
+
+.orders-table thead th {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+  background: var(--surface-muted, #f8fafc);
+  color: var(--text-secondary, #64748b);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.045em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.orders-table tbody td {
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+  vertical-align: middle;
+  font-size: 0.9rem;
+}
+
+.orders-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.orders-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.orders-table tbody tr:hover {
+  background: var(--surface-muted, #f8fafc);
+}
+
+.order-tracking-number {
+  color: var(--text-primary, #1e293b);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.order-price {
+  color: var(--success, #16a34a);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.order-quantity {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  min-height: 30px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--accent-soft, #eff6ff);
+  color: var(--accent, #2563eb);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.order-date {
+  color: var(--text-secondary, #64748b);
+  white-space: nowrap;
+}
+
+/* Mobile order cards are hidden on larger screens */
+
+.orders-mobile-list {
+  display: none;
+}
+
+/* Empty state */
+
+.orders-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 24px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 16px;
+  background: var(--surface, #fff);
+  text-align: center;
+}
+
+.orders-empty-icon {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  background: var(--accent-soft, #eff6ff);
+  color: var(--accent, #2563eb);
+}
+
+.orders-empty-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.orders-empty-state h3 {
+  margin: 0 0 10px;
+  color: var(--text-primary, #1e293b);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.orders-empty-state p {
+  max-width: 360px;
+  margin: 0 0 24px;
+  color: var(--text-secondary, #64748b);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.orders-shop-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 1px solid var(--accent, #2563eb);
+  border-radius: 8px;
+  background: var(--accent, #2563eb);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.orders-shop-button:hover {
+  border-color: var(--accent-hover, #1d4ed8);
+  background: var(--accent-hover, #1d4ed8);
+  color: #fff;
+}
+
+.orders-shop-button:focus-visible {
+  outline: 3px solid var(--accent, #2563eb);
+  outline-offset: 3px;
+}
+
+
+/* ========================================
+   Order History — Dark Theme
+   ======================================== */
+
+body.dark-theme .orders-page {
+  background: var(--page-bg);
+  color: var(--text-primary);
+}
+
+/* Page heading */
+body.dark-theme .orders-title {
+  color: var(--text-primary);
+}
+
+body.dark-theme .orders-subtitle {
+  color: var(--text-secondary);
+}
+
+/* Order count badge */
+body.dark-theme .orders-count {
+  background: var(--surface-muted);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+/* Desktop table container */
+body.dark-theme .orders-table-wrapper {
+  background: var(--surface);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+body.dark-theme .orders-table {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+/* Table header */
+body.dark-theme .orders-table thead th {
+  background: var(--surface-muted);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+/* Table rows */
+body.dark-theme .orders-table tbody tr {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+body.dark-theme .orders-table tbody tr:hover {
+  background: var(--surface-raised);
+}
+
+body.dark-theme .orders-table tbody td {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Tracking number and dates */
+body.dark-theme .order-tracking-number {
+  color: var(--text-primary);
+}
+
+body.dark-theme .order-date {
+  color: var(--text-secondary);
+}
+
+/* Price */
+body.dark-theme .order-price {
+  color: var(--success);
+}
+
+/* Quantity badge */
+body.dark-theme .order-quantity {
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+}
+
+/* Mobile order cards */
+body.dark-theme .order-card {
+  background: var(--surface);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+body.dark-theme .order-card-header {
+  border-color: var(--border-color);
+}
+
+body.dark-theme .order-card-label,
+body.dark-theme .order-detail-label {
+  color: var(--text-secondary);
+}
+
+body.dark-theme .order-card-date {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Empty state */
+body.dark-theme .orders-empty-state {
+  background: var(--surface);
+  border-color: var(--border-color);
+}
+
+body.dark-theme .orders-empty-state h3 {
+  color: var(--text-primary);
+}
+
+body.dark-theme .orders-empty-state p {
+  color: var(--text-secondary);
+}
+
+body.dark-theme .orders-empty-icon {
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+}
+
+/* Browse products button */
+body.dark-theme .orders-shop-button {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+body.dark-theme .orders-shop-button:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #fff;
+}
+
+
+/* Tablet */
+
+@media (max-width: 991.98px) {
+  .orders-table thead th,
+  .orders-table tbody td {
+    padding: 15px 12px;
+  }
+
+  .orders-table thead th {
+    font-size: 0.68rem;
+  }
+
+  .orders-table tbody td {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 767.98px) {
+  .orders-page {
+    padding-bottom: 24px;
+  }
+
+  .orders-header {
+    align-items: flex-start;
+    margin-bottom: 22px;
+  }
+
+  .orders-subtitle {
+    max-width: 280px;
+    font-size: 0.875rem;
+  }
+
+  .orders-table-wrapper {
+    display: none;
+  }
+
+  .orders-mobile-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .order-card {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 12px;
+    background: var(--surface, #fff);
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+  }
+
+  .order-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+  }
+
+  .order-card-label,
+  .order-detail-label {
+    color: var(--text-secondary, #64748b);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .order-card-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 16px 0;
+  }
+
+  .order-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .order-card-date {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+    color: var(--text-primary, #1e293b);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .orders-empty-state {
+    padding: 40px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orders-table tbody tr,
+  .orders-shop-button {
+    transition: none;
+  }
+}
