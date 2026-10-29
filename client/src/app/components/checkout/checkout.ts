@@ -41,6 +41,8 @@ export class Checkout implements OnInit {
 
   clientSecret = signal('');
 
+  isDisabled: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     public cartService: CartService,
@@ -49,7 +51,7 @@ export class Checkout implements OnInit {
     private router: Router
   ) {
     afterNextRender(async() => {
-      this.paymentInfo.amount = this.cartService.totalPrice() * 100
+      this.paymentInfo.amount = Math.round(this.cartService.totalPrice() * 100);
       this.paymentInfo.currency = "USD";
       this.checkoutService
         .createPaymentIntent(this.paymentInfo)
@@ -141,8 +143,6 @@ export class Checkout implements OnInit {
     const billingForm = this.checkoutFormGroup.controls['billing'].value;
     
     const order = new Order(this.cartService.cartItems(), this.cartService.totalPrice(), this.cartService.totalQuantity());
-    this.paymentInfo.amount = this.cartService.totalPrice() * 100
-    this.paymentInfo.currency = "USD";
     const shippingState = new State(shippingForm.state.id, shippingForm.state.name);
     const shippingCountry = new Country(shippingForm.country.id, shippingForm.country.name, shippingForm.country.code);
     const billingState = new State(billingForm.state.id, billingForm.state.name);
@@ -156,13 +156,30 @@ export class Checkout implements OnInit {
     );
 
     if (!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
-      const data = { payment_method: {card: this.cardElement} };
+      this.isDisabled = true;
+      const data = { 
+        payment_method: {
+          card: this.cardElement,
+          billing_details: {
+            email: purchase.customer.email,
+            name: `$${purchase.customer.firstName} ${purchase.customer.lastName}`,
+            address: {
+              line1: purchase.billingAddress.street,
+              city: purchase.billingAddress.city,
+              state: purchase.billingAddress.state.name,
+              postal_code: purchase.billingAddress.zipCode,
+              country: purchase.billingAddress.country.code
+            }
+          }
+        } 
+      };
       const options = { handleActions: false };
       this.stripe
         ?.confirmCardPayment(this.clientSecret(), data, options)
         .then((result: any) => {
           if (result.error) {
             alert(`There was an error: ${result.error.message}`);
+            this.isDisabled = false;
           } else {
             this.checkoutService
               .placeOrder(purchase)
@@ -170,8 +187,12 @@ export class Checkout implements OnInit {
                 next: response => {
                   alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
                   this.resetCart();
+                  this.isDisabled = false;
                 },
-                error: err => alert(`There was an error: ${err.message}`)
+                error: err => {
+                  alert(`There was an error: ${err.message}`);
+                  this.isDisabled = false;
+                }
               });
           }
         });
@@ -185,6 +206,7 @@ export class Checkout implements OnInit {
     this.cartService.cartItems.set([]);
     this.cartService.totalPrice.set(0);
     this.cartService.totalQuantity.set(0);
+    this.cartService.persistCartItems();
     this.checkoutFormGroup.reset();
     this.router.navigateByUrl("/products");
   };
