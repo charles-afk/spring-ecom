@@ -23,8 +23,6 @@ export const appConfig: ApplicationConfig = {
       httpInterceptor: {
         allowedList: [
           `${environment.apiUrl}/api/orders/**`,
-          `${environment.apiUrl}/api/checkout/purchase`,
-          `${environment.apiUrl}/api/checkout/payment-intent`
         ],
       },
     }),
